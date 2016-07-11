@@ -71,7 +71,7 @@ func (e Effectiveness) Id() int {
 	return int(e)
 }
 
-func (e Effectiveness) Name(l lang.Language) string {
+func (e Effectiveness) LocalName(l lang.Language) string {
 	switch l {
 	case lang.Japanese:
 		return ja.Effectiveness(e).String()
@@ -98,8 +98,15 @@ func (e Effectiveness) Name(l lang.Language) string {
 	}
 }
 
+const _Symbol_string = "×▲ ●"
+
+var _Symbol_index = [...]uint8{0, 2, 5, 6, 9}
+
 func (e Effectiveness) Symbol() string {
-	return [4]string{"×", "▲", "", "●"}[e.Id()]
+	if e < 0 || e >= Effectiveness(len(_Symbol_index)-1) {
+		panic("Invalid Effectiveness")
+	}
+	return _Symbol_string[_Symbol_index[e]:_Symbol_index[e+1]]
 }
 
 func (e Effectiveness) Multiplier() float64 {

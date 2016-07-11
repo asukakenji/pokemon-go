@@ -53,7 +53,7 @@ func (t Type) Id() int {
 	return int(t)
 }
 
-func (t Type) Name(l lang.Language) string {
+func (t Type) LocalName(l lang.Language) string {
 	switch l {
 	case lang.Japanese:
 		return ja.Type(t).String()
@@ -80,6 +80,13 @@ func (t Type) Name(l lang.Language) string {
 	}
 }
 
+const _Symbol_string = "無炎水草電氷闘毒地飛超虫岩霊竜悪鋼妖"
+
+var _Symbol_index = [...]uint8{0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54}
+
 func (t Type) Symbol() string {
-	return [18]string{"無", "炎", "水", "草", "電", "氷", "闘", "毒", "地", "飛", "超", "虫", "岩", "霊", "竜", "悪", "鋼", "妖"}[t.Id()]
+	if t < 0 || t >= Type(len(_Symbol_index)-1) {
+		panic("Invalid Type")
+	}
+	return _Symbol_string[_Symbol_index[t]:_Symbol_index[t+1]]
 }
