@@ -4,7 +4,8 @@ package zhTW
 type Type int8
 
 const (
-	一般 Type = iota
+	沒有 Type = iota
+	一般
 	炎
 	水
 	草

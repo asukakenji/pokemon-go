@@ -4,7 +4,8 @@ package ko
 type Type int8
 
 const (
-	노말 Type = iota
+	없음 Type = iota
+	노말
 	불꽃
 	물
 	풀

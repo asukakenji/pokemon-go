@@ -4,9 +4,9 @@ package ko
 
 import "fmt"
 
-const _Type_name = "노말불꽃물풀전기얼음격투독땅비행에스퍼벌레바위고스트드래곤악강철페어리"
+const _Type_name = "없음노말불꽃물풀전기얼음격투독땅비행에스퍼벌레바위고스트드래곤악강철페어리"
 
-var _Type_index = [...]uint8{0, 6, 12, 15, 18, 24, 30, 36, 39, 42, 48, 57, 63, 69, 78, 87, 90, 96, 105}
+var _Type_index = [...]uint8{0, 6, 12, 18, 21, 24, 30, 36, 42, 45, 48, 54, 63, 69, 75, 84, 93, 96, 102, 111}
 
 func (i Type) String() string {
 	if i < 0 || i >= Type(len(_Type_index)-1) {

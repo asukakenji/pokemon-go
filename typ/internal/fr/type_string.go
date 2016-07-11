@@ -4,9 +4,9 @@ package fr
 
 import "fmt"
 
-const _Type_name = "NormalFeuEauPlanteÉlectriqueGlaceCombatPoisonSolVolPsyInsecteRocheSpectreDragonTénèbresAcierFée"
+const _Type_name = "AucunNormalFeuEauPlanteÉlectriqueGlaceCombatPoisonSolVolPsyInsecteRocheSpectreDragonTénèbresAcierFée"
 
-var _Type_index = [...]uint8{0, 6, 9, 12, 18, 29, 34, 40, 46, 49, 52, 55, 62, 67, 74, 80, 90, 95, 99}
+var _Type_index = [...]uint8{0, 5, 11, 14, 17, 23, 34, 39, 45, 51, 54, 57, 60, 67, 72, 79, 85, 95, 100, 104}
 
 func (i Type) String() string {
 	if i < 0 || i >= Type(len(_Type_index)-1) {

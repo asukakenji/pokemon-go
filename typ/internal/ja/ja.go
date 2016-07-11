@@ -4,7 +4,8 @@ package ja
 type Type int8
 
 const (
-	ノーマル Type = iota
+	なし Type = iota
+	ノーマル
 	ほのお
 	みず
 	くさ

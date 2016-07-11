@@ -4,7 +4,8 @@ package es
 type Type int8
 
 const (
-	Normal Type = iota
+	Ninguna Type = iota
+	Normal
 	Fuego
 	Agua
 	Planta // Hierba

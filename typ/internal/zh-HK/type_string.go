@@ -4,9 +4,9 @@ package zhHK
 
 import "fmt"
 
-const _Type_name = "普通火水草電擊冰格鬥毒地上飛行超能力蟲岩石幽靈龍惡鋼妖精"
+const _Type_name = "沒有普通火水草電擊冰格鬥毒地上飛行超能力蟲岩石幽靈龍惡鋼妖精"
 
-var _Type_index = [...]uint8{0, 6, 9, 12, 15, 21, 24, 30, 33, 39, 45, 54, 57, 63, 69, 72, 75, 78, 84}
+var _Type_index = [...]uint8{0, 6, 12, 15, 18, 21, 27, 30, 36, 39, 45, 51, 60, 63, 69, 75, 78, 81, 84, 90}
 
 func (i Type) String() string {
 	if i < 0 || i >= Type(len(_Type_index)-1) {

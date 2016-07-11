@@ -4,7 +4,8 @@ package de
 type Type int8
 
 const (
-	Normal Type = iota
+	Keiner Type = iota
+	Normal
 	Feuer
 	Wasser
 	Pflanze
