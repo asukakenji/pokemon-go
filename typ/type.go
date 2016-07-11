@@ -18,33 +18,32 @@ import (
 // Type
 type Type int8
 
-// The "T" prefix is required to make the symbols public.
-// Go requires the first character of a public identifier to be in uppercase.
 const (
-	T無 Type = iota // Normal
-	T炎             // Fire
-	T水             // Water
-	T草             // Grass
-	T電             // Electric
-	T氷             // Ice
-	T闘             // Fighting
-	T毒             // Poison
-	T地             // Ground
-	T飛             // Flying
-	T超             // Psychic
-	T虫             // Bug
-	T岩             // Rock
-	T霊             // Ghost
-	T竜             // Dragon
-	T悪             // Dark
-	T鋼             // Steel
-	T妖             // Fairy
+	None     Type = iota
+	Normal        // 無
+	Fire          // 炎
+	Water         // 水
+	Grass         // 草
+	Electric      // 電
+	Ice           // 氷
+	Fighting      // 闘
+	Poison        // 毒
+	Ground        // 地
+	Flying        // 飛
+	Psychic       // 超
+	Bug           // 虫
+	Rock          // 岩
+	Ghost         // 霊
+	Dragon        // 竜
+	Dark          // 悪
+	Steel         // 鋼
+	Fairy         // 妖
 )
 
 //go:generate stringer -type=Type
 
 func ForEach(f func(Type)) {
-	for i := T無; i <= T妖; i = i + 1 {
+	for i := Normal; i <= Fairy; i = i + 1 {
 		f(Type(i))
 	}
 }
