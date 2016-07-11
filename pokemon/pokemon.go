@@ -171,6 +171,14 @@ func ForEach(f func(Pokemon)) {
 	}
 }
 
+func OfType(t typ.Type, f func(Pokemon)) func(Pokemon) {
+	return func(p Pokemon) {
+		if p.Type1() == t || p.Type2() == t {
+			f(p)
+		}
+	}
+}
+
 func (p Pokemon) Id() int {
 	return int(p)
 }
@@ -180,7 +188,37 @@ func (p Pokemon) LocalName(l lang.Language) string {
 	return ""
 }
 
-const X = -1
+func (p Pokemon) BaseCombatPower() int {
+	return int(pokemons[p.Id()].baseCombatPower)
+}
+
+func (p Pokemon) BaseHitPoints() int {
+	return int(pokemons[p.Id()].baseHitPoints)
+}
+
+func (p Pokemon) Type1() typ.Type {
+	return pokemons[p.Id()].type1
+}
+
+func (p Pokemon) Type2() typ.Type {
+	return pokemons[p.Id()].type2
+}
+
+func (p Pokemon) Weight() float64 {
+	return pokemons[p.Id()].weight
+}
+
+func (p Pokemon) Height() float64 {
+	return pokemons[p.Id()].height
+}
+
+func (p Pokemon) CandyToPowerUp() (Pokemon, int) {
+	return pokemons[p.Id()].candyType, int(pokemons[p.Id()].candyToPowerUp)
+}
+
+func (p Pokemon) CandyToEvolve() (Pokemon, int) {
+	return pokemons[p.Id()].candyType, int(pokemons[p.Id()].candyToEvolve)
+}
 
 type _pokemon struct {
 	baseCombatPower int16
@@ -196,6 +234,7 @@ type _pokemon struct {
 }
 
 var pokemons = [...]*_pokemon{
+	nil,
 	&_pokemon{-1, -1, typ.Grass, typ.Poison, 6.9, 0.7, Bulbasaur, 1, 25, nil},       // 001: Bulbasaur (フシギダネ), SD:200
 	&_pokemon{-1, -1, typ.Grass, typ.Poison, 13.0, 1.0, Bulbasaur, 1, -1, nil},      // 002: Ivysaur (フシギソウ)
 	&_pokemon{-1, -1, typ.Grass, typ.Poison, 100.0, 2.0, Bulbasaur, 1, 0, nil},      // 003: Venusaur (フシギバナ)
