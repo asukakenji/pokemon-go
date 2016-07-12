@@ -168,30 +168,12 @@ const (
 
 //go:generate stringer -type=Pokemon
 
-func ForEach(f func(Pokemon)) {
-	for i := Bulbasaur; i <= Mew; i = i + 1 {
-		f(Pokemon(i))
-	}
-}
-
-func OfType(t typ.Type, f func(Pokemon)) func(Pokemon) {
-	return func(p Pokemon) {
-		if p.Type1() == t || p.Type2() == t {
-			f(p)
-		}
-	}
-}
-
-func OfTypes(t1, t2 typ.Type, f func(Pokemon)) func(Pokemon) {
-	return func(p Pokemon) {
-		if p.Type1() == t1 && p.Type2() == t2 || p.Type1() == t2 && p.Type2() == t1 {
-			f(p)
-		}
-	}
-}
-
 func (p Pokemon) Id() int {
 	return int(p)
+}
+
+func (p Pokemon) self() *_pokemon {
+	return pokemons[p.Id()]
 }
 
 // TODO: Write this!
@@ -200,35 +182,35 @@ func (p Pokemon) LocalName(l lang.Language) string {
 }
 
 func (p Pokemon) BaseCombatPower() int {
-	return int(pokemons[p.Id()].baseCombatPower)
+	return int(p.self().baseCombatPower)
 }
 
 func (p Pokemon) BaseHitPoints() int {
-	return int(pokemons[p.Id()].baseHitPoints)
+	return int(p.self().baseHitPoints)
 }
 
 func (p Pokemon) Type1() typ.Type {
-	return pokemons[p.Id()].type1
+	return p.self().type1
 }
 
 func (p Pokemon) Type2() typ.Type {
-	return pokemons[p.Id()].type2
+	return p.self().type2
 }
 
 func (p Pokemon) Weight() float64 {
-	return pokemons[p.Id()].weight
+	return p.self().weight
 }
 
 func (p Pokemon) Height() float64 {
-	return pokemons[p.Id()].height
+	return p.self().height
 }
 
 func (p Pokemon) CandyToPowerUp() (Pokemon, int) {
-	return pokemons[p.Id()].candyType, int(pokemons[p.Id()].candyToPowerUp)
+	return p.self().candyType, int(p.self().candyToPowerUp)
 }
 
 func (p Pokemon) CandyToEvolve() (Pokemon, int) {
-	return pokemons[p.Id()].candyType, int(pokemons[p.Id()].candyToEvolve)
+	return p.self().candyType, int(p.self().candyToEvolve)
 }
 
 // Multiplier to be applied when this Pokemon is attacked by the specified type of moves
