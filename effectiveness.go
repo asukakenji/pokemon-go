@@ -1,4 +1,4 @@
-package eff
+package pokemon
 
 import (
 	"strings"
@@ -6,16 +6,16 @@ import (
 	"github.com/asukakenji/pokemon-go/lang"
 	"github.com/asukakenji/pokemon-go/typ"
 
-	"github.com/asukakenji/pokemon-go/eff/internal/de"
-	"github.com/asukakenji/pokemon-go/eff/internal/en"
-	"github.com/asukakenji/pokemon-go/eff/internal/es"
-	"github.com/asukakenji/pokemon-go/eff/internal/fr"
-	"github.com/asukakenji/pokemon-go/eff/internal/it"
-	"github.com/asukakenji/pokemon-go/eff/internal/ja"
-	"github.com/asukakenji/pokemon-go/eff/internal/ko"
-	"github.com/asukakenji/pokemon-go/eff/internal/zh-CN"
-	"github.com/asukakenji/pokemon-go/eff/internal/zh-HK"
-	"github.com/asukakenji/pokemon-go/eff/internal/zh-TW"
+	"github.com/asukakenji/pokemon-go/internal/de"
+	"github.com/asukakenji/pokemon-go/internal/en"
+	"github.com/asukakenji/pokemon-go/internal/es"
+	"github.com/asukakenji/pokemon-go/internal/fr"
+	"github.com/asukakenji/pokemon-go/internal/it"
+	"github.com/asukakenji/pokemon-go/internal/ja"
+	"github.com/asukakenji/pokemon-go/internal/ko"
+	"github.com/asukakenji/pokemon-go/internal/zh-CN"
+	"github.com/asukakenji/pokemon-go/internal/zh-HK"
+	"github.com/asukakenji/pokemon-go/internal/zh-TW"
 )
 
 // Effectiveness
@@ -34,7 +34,7 @@ const (
 
 // moveType: The type of the move (attacker);
 // pokemonType: The type of the pokemon (defender).
-func For(moveType, pokemonType typ.Type) Effectiveness {
+func EffectivenessFor(moveType, pokemonType typ.Type) Effectiveness {
 	return table[pokemonType][moveType]
 }
 

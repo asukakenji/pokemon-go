@@ -1,4 +1,4 @@
-package eff
+package pokemon
 
 // Official Table: http://www.pokemon.co.jp/whats/summary/
 var table = [19][19]Effectiveness{
