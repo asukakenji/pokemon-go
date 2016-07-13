@@ -220,7 +220,15 @@ func (p Pokemon) Multiplier(t typ.Type) float64 {
 
 func (p Pokemon) Weaknesses() []Weakness {
 	weaknesses := make([]Weakness, 0, 19)
-	typ.ForEach(func(t typ.Type) {
+	/* Ideal Implementation:
+	 * ---------------------
+	 * typ.All().Map(func(t typ.Type) Weakness {
+	 *     return Weakness{t, p.Multiplier(t)}
+	 * }).Filter(func(w Weakness) bool {
+	 *     return w.m > 1.0
+	 * }).Sort(ByMultiplier)
+	 */
+	typ.All().ForEach(func(t typ.Type) {
 		m := p.Multiplier(t)
 		if m > 1.0 {
 			weaknesses = append(weaknesses, Weakness{t, m})

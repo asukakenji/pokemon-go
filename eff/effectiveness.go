@@ -62,12 +62,6 @@ func For(moveType, pokemonType typ.Type) Effectiveness {
 	return table[pokemonType][moveType]
 }
 
-func ForEach(f func(Effectiveness)) {
-	for i := EX; i <= EO; i = i + 1 {
-		f(Effectiveness(i))
-	}
-}
-
 func (e Effectiveness) Id() int {
 	return int(e)
 }

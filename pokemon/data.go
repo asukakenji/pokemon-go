@@ -44,7 +44,7 @@ var pokemons = [...]*_pokemon{
 	&_pokemon{Fearow, -1, -1, typ.Normal, typ.Flying, 38.0, 1.2, Spearow, 1, 0, nil},              // 022: Fearow (オニドリル)
 	&_pokemon{Ekans, -1, -1, typ.Poison, typ.None, 6.9, 2.0, Ekans, 1, -1, nil},                   // 023: Ekans (アーボ)
 	&_pokemon{Arbok, -1, -1, typ.Poison, typ.None, 65.0, 3.5, Ekans, 1, 0, nil},                   // 024: Arbok (アーボック)
-	&_pokemon{Pikachu, -1, -1, typ.Electric, typ.None, 6.0, 0.4, Pikachu, 1, -1, nil},             // 025: Pikachu (ピカチュウ), 172 -> 025
+	&_pokemon{Pikachu, 11, 10, typ.Electric, typ.None, 6.0, 0.4, Pikachu, 1, 50, nil},             // 025: Pikachu (ピカチュウ), 172 -> 025, SD: 200, CP: [11,,,], HP: [10,,,]
 	&_pokemon{Raichu, -1, -1, typ.Electric, typ.None, 30.0, 0.8, Pikachu, 1, 0, nil},              // 026: Raichu (ライチュウ)
 	&_pokemon{Sandshrew, -1, -1, typ.Ground, typ.None, 12.0, 0.6, Sandshrew, 1, -1, nil},          // 027: Sandshrew (サンド)
 	&_pokemon{Sandslash, -1, -1, typ.Ground, typ.None, 29.5, 1.0, Sandshrew, 1, 0, nil},           // 028: Sandslash (サンドパン)

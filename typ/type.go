@@ -42,12 +42,6 @@ const (
 
 //go:generate stringer -type=Type
 
-func ForEach(f func(Type)) {
-	for i := Normal; i <= Fairy; i = i + 1 {
-		f(Type(i))
-	}
-}
-
 func (t Type) Id() int {
 	return int(t)
 }
