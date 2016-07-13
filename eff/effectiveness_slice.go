@@ -1,4 +1,4 @@
-package pokemon
+package eff
 
 import (
 	"sort"
@@ -35,7 +35,7 @@ func (es EffectivenessSlice) Sort(less func(Effectiveness, Effectiveness) bool) 
 	return result
 }
 
-func AllEffectivenesses() EffectivenessIterable {
+func All() EffectivenessIterable {
 	return virtualEffectivenessSlice(0)
 }
 

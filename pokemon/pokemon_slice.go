@@ -49,7 +49,7 @@ func (ps PokemonSlice) Sort(less func(Pokemon, Pokemon) bool) PokemonIterable {
 }
 
 // AllPokemons returns all Pokemon's as a PokemonIterable
-func AllPokemons() PokemonIterable {
+func All() PokemonIterable {
 	return virtualPokemonSlice(0)
 }
 

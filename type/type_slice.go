@@ -1,10 +1,10 @@
-package pokemon
+package _type
 
 type TypeSlice []Type
 
-func AllTypes() TypeSlice {
+func All() TypeSlice {
 	result := make([]Type, 18)
-	for i, t := 0, TypeNormal; t <= TypeFairy; i, t = i+1, t+1 {
+	for i, t := 0, Normal; t <= Fairy; i, t = i+1, t+1 {
 		result[i] = t
 	}
 	return result

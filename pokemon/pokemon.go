@@ -3,7 +3,10 @@ package pokemon
 import (
 	"sort"
 
+	"github.com/asukakenji/pokemon-go/eff"
 	"github.com/asukakenji/pokemon-go/lang"
+	typ "github.com/asukakenji/pokemon-go/type"
+	"github.com/asukakenji/pokemon-go/weak"
 )
 
 // Pokemon
@@ -187,11 +190,11 @@ func (p Pokemon) BaseHitPoints() int {
 	return int(p.self().baseHitPoints)
 }
 
-func (p Pokemon) Type1() Type {
+func (p Pokemon) Type1() typ.Type {
 	return p.self().type1
 }
 
-func (p Pokemon) Type2() Type {
+func (p Pokemon) Type2() typ.Type {
 	return p.self().type2
 }
 
@@ -212,26 +215,26 @@ func (p Pokemon) CandyToEvolve() (Pokemon, int) {
 }
 
 // Multiplier to be applied when this Pokemon is attacked by the specified type of moves
-func (p Pokemon) Multiplier(t Type) float64 {
-	return EffectivenessFor(t, p.Type1()).Multiplier() * EffectivenessFor(t, p.Type2()).Multiplier()
+func (p Pokemon) Multiplier(t typ.Type) float64 {
+	return eff.For(t, p.Type1()).Multiplier() * eff.For(t, p.Type2()).Multiplier()
 }
 
-func (p Pokemon) Weaknesses() []Weakness {
-	weaknesses := make([]Weakness, 0, 19)
+func (p Pokemon) Weaknesses() []weak.Weakness {
+	weaknesses := make([]weak.Weakness, 0, 19)
 	/* Ideal Implementation:
 	 * ---------------------
-	 * AllTypes().Map(func(t Type) Weakness {
+	 * typ.All().Map(func(t typ.Type) Weakness {
 	 *     return Weakness{t, p.Multiplier(t)}
 	 * }).Filter(func(w Weakness) bool {
 	 *     return w.m > 1.0
 	 * }).Sort(ByMultiplier)
 	 */
-	AllTypes().ForEach(func(t Type) {
+	typ.All().ForEach(func(t typ.Type) {
 		m := p.Multiplier(t)
 		if m > 1.0 {
-			weaknesses = append(weaknesses, Weakness{t, m})
+			weaknesses = append(weaknesses, weak.Weakness{t, m})
 		}
 	})
-	sort.Stable(WeaknessSlice(weaknesses))
+	sort.Stable(weak.WeaknessSlice(weaknesses))
 	return weaknesses
 }

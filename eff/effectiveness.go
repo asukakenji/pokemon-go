@@ -1,20 +1,21 @@
-package pokemon
+package eff
 
 import (
 	"strings"
 
-	"github.com/asukakenji/pokemon-go/lang"
+	"github.com/asukakenji/pokemon-go/eff/internal/de"
+	"github.com/asukakenji/pokemon-go/eff/internal/en"
+	"github.com/asukakenji/pokemon-go/eff/internal/es"
+	"github.com/asukakenji/pokemon-go/eff/internal/fr"
+	"github.com/asukakenji/pokemon-go/eff/internal/it"
+	"github.com/asukakenji/pokemon-go/eff/internal/ja"
+	"github.com/asukakenji/pokemon-go/eff/internal/ko"
+	"github.com/asukakenji/pokemon-go/eff/internal/zh-CN"
+	"github.com/asukakenji/pokemon-go/eff/internal/zh-HK"
+	"github.com/asukakenji/pokemon-go/eff/internal/zh-TW"
 
-	"github.com/asukakenji/pokemon-go/internal/effectiveness/de"
-	"github.com/asukakenji/pokemon-go/internal/effectiveness/en"
-	"github.com/asukakenji/pokemon-go/internal/effectiveness/es"
-	"github.com/asukakenji/pokemon-go/internal/effectiveness/fr"
-	"github.com/asukakenji/pokemon-go/internal/effectiveness/it"
-	"github.com/asukakenji/pokemon-go/internal/effectiveness/ja"
-	"github.com/asukakenji/pokemon-go/internal/effectiveness/ko"
-	"github.com/asukakenji/pokemon-go/internal/effectiveness/zh-CN"
-	"github.com/asukakenji/pokemon-go/internal/effectiveness/zh-HK"
-	"github.com/asukakenji/pokemon-go/internal/effectiveness/zh-TW"
+	"github.com/asukakenji/pokemon-go/lang"
+	typ "github.com/asukakenji/pokemon-go/type"
 )
 
 // Effectiveness
@@ -33,7 +34,7 @@ const (
 
 // moveType: The type of the move (attacker);
 // pokemonType: The type of the pokemon (defender).
-func EffectivenessFor(moveType, pokemonType Type) Effectiveness {
+func For(moveType, pokemonType typ.Type) Effectiveness {
 	return table[pokemonType][moveType]
 }
 
@@ -68,15 +69,15 @@ func (e Effectiveness) LocalName(l lang.Language) string {
 	}
 }
 
-const _Effectiveness_Symbol_string = "×▲ ●"
+const _Symbol_string = "×▲ ●"
 
-var _Effectiveness_Symbol_index = [...]uint8{0, 2, 5, 6, 9}
+var _Symbol_index = [...]uint8{0, 2, 5, 6, 9}
 
 func (e Effectiveness) Symbol() string {
-	if e < 0 || e >= Effectiveness(len(_Effectiveness_Symbol_index)-1) {
+	if e < 0 || e >= Effectiveness(len(_Symbol_index)-1) {
 		panic("Invalid Effectiveness")
 	}
-	return _Effectiveness_Symbol_string[_Effectiveness_Symbol_index[e]:_Effectiveness_Symbol_index[e+1]]
+	return _Symbol_string[_Symbol_index[e]:_Symbol_index[e+1]]
 }
 
 func (e Effectiveness) Multiplier() float64 {

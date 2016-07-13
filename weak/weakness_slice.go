@@ -1,9 +1,4 @@
-package pokemon
-
-type Weakness struct {
-	Type       Type    // Type
-	Multiplier float64 // Multiplier
-}
+package weak
 
 // WeaknessSlice is a helper type for sorting the elements in a Weakness slice.
 type WeaknessSlice []Weakness
