@@ -4,18 +4,17 @@ import (
 	"strings"
 
 	"github.com/asukakenji/pokemon-go/lang"
-	"github.com/asukakenji/pokemon-go/typ"
 
-	"github.com/asukakenji/pokemon-go/internal/de"
-	"github.com/asukakenji/pokemon-go/internal/en"
-	"github.com/asukakenji/pokemon-go/internal/es"
-	"github.com/asukakenji/pokemon-go/internal/fr"
-	"github.com/asukakenji/pokemon-go/internal/it"
-	"github.com/asukakenji/pokemon-go/internal/ja"
-	"github.com/asukakenji/pokemon-go/internal/ko"
-	"github.com/asukakenji/pokemon-go/internal/zh-CN"
-	"github.com/asukakenji/pokemon-go/internal/zh-HK"
-	"github.com/asukakenji/pokemon-go/internal/zh-TW"
+	"github.com/asukakenji/pokemon-go/internal/effectiveness/de"
+	"github.com/asukakenji/pokemon-go/internal/effectiveness/en"
+	"github.com/asukakenji/pokemon-go/internal/effectiveness/es"
+	"github.com/asukakenji/pokemon-go/internal/effectiveness/fr"
+	"github.com/asukakenji/pokemon-go/internal/effectiveness/it"
+	"github.com/asukakenji/pokemon-go/internal/effectiveness/ja"
+	"github.com/asukakenji/pokemon-go/internal/effectiveness/ko"
+	"github.com/asukakenji/pokemon-go/internal/effectiveness/zh-CN"
+	"github.com/asukakenji/pokemon-go/internal/effectiveness/zh-HK"
+	"github.com/asukakenji/pokemon-go/internal/effectiveness/zh-TW"
 )
 
 // Effectiveness
@@ -34,7 +33,7 @@ const (
 
 // moveType: The type of the move (attacker);
 // pokemonType: The type of the pokemon (defender).
-func EffectivenessFor(moveType, pokemonType typ.Type) Effectiveness {
+func EffectivenessFor(moveType, pokemonType Type) Effectiveness {
 	return table[pokemonType][moveType]
 }
 

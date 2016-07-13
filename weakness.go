@@ -1,12 +1,8 @@
 package pokemon
 
-import (
-	"github.com/asukakenji/pokemon-go/typ"
-)
-
 type Weakness struct {
-	Type       typ.Type // Type
-	Multiplier float64  // Multiplier
+	Type       Type    // Type
+	Multiplier float64 // Multiplier
 }
 
 // WeaknessSlice is a helper type for sorting the elements in a Weakness slice.

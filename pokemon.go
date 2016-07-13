@@ -4,7 +4,6 @@ import (
 	"sort"
 
 	"github.com/asukakenji/pokemon-go/lang"
-	"github.com/asukakenji/pokemon-go/typ"
 )
 
 // Pokemon
@@ -188,11 +187,11 @@ func (p Pokemon) BaseHitPoints() int {
 	return int(p.self().baseHitPoints)
 }
 
-func (p Pokemon) Type1() typ.Type {
+func (p Pokemon) Type1() Type {
 	return p.self().type1
 }
 
-func (p Pokemon) Type2() typ.Type {
+func (p Pokemon) Type2() Type {
 	return p.self().type2
 }
 
@@ -213,7 +212,7 @@ func (p Pokemon) CandyToEvolve() (Pokemon, int) {
 }
 
 // Multiplier to be applied when this Pokemon is attacked by the specified type of moves
-func (p Pokemon) Multiplier(t typ.Type) float64 {
+func (p Pokemon) Multiplier(t Type) float64 {
 	return EffectivenessFor(t, p.Type1()).Multiplier() * EffectivenessFor(t, p.Type2()).Multiplier()
 }
 
@@ -221,13 +220,13 @@ func (p Pokemon) Weaknesses() []Weakness {
 	weaknesses := make([]Weakness, 0, 19)
 	/* Ideal Implementation:
 	 * ---------------------
-	 * typ.AllTypes().Map(func(t typ.Type) Weakness {
+	 * AllTypes().Map(func(t Type) Weakness {
 	 *     return Weakness{t, p.Multiplier(t)}
 	 * }).Filter(func(w Weakness) bool {
 	 *     return w.m > 1.0
 	 * }).Sort(ByMultiplier)
 	 */
-	typ.AllTypes().ForEach(func(t typ.Type) {
+	AllTypes().ForEach(func(t Type) {
 		m := p.Multiplier(t)
 		if m > 1.0 {
 			weaknesses = append(weaknesses, Weakness{t, m})

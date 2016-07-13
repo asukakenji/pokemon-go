@@ -2,8 +2,6 @@ package pokemon
 
 import (
 	"sort"
-
-	"github.com/asukakenji/pokemon-go/typ"
 )
 
 // PokemonIterable defines an interface for an iterable collection of Pokemon.
@@ -58,7 +56,7 @@ func AllPokemons() PokemonIterable {
 // ByTypeF is designed to be used with PokemonIterable.Filter. It returns
 // a function that is usable as a parameter for Filter. The returned function
 // returns true when one of the types of the Pokemon matches the query.
-func ByTypeF(t typ.Type) func(Pokemon) bool {
+func ByTypeF(t Type) func(Pokemon) bool {
 	return func(p Pokemon) bool {
 		return p.Type1() == t || p.Type2() == t
 	}
@@ -68,7 +66,7 @@ func ByTypeF(t typ.Type) func(Pokemon) bool {
 // a function that is usable as a parameter for Filter. The returned function
 // returns true when both of the types of the Pokemon match the query, in any
 // order.
-func ByTypesF(t1, t2 typ.Type) func(Pokemon) bool {
+func ByTypesF(t1, t2 Type) func(Pokemon) bool {
 	return func(p Pokemon) bool {
 		return p.Type1() == t1 && p.Type2() == t2 || p.Type1() == t2 && p.Type2() == t1
 	}
