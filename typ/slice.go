@@ -2,7 +2,7 @@ package typ
 
 type TypeSlice []Type
 
-func All() TypeSlice {
+func AllTypes() TypeSlice {
 	result := make([]Type, 18)
 	for i, t := 0, Normal; t <= Fairy; i, t = i+1, t+1 {
 		result[i] = t

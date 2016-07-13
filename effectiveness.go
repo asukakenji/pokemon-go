@@ -69,15 +69,15 @@ func (e Effectiveness) LocalName(l lang.Language) string {
 	}
 }
 
-const _Symbol_string = "×▲ ●"
+const _Effectiveness_Symbol_string = "×▲ ●"
 
-var _Symbol_index = [...]uint8{0, 2, 5, 6, 9}
+var _Effectiveness_Symbol_index = [...]uint8{0, 2, 5, 6, 9}
 
 func (e Effectiveness) Symbol() string {
-	if e < 0 || e >= Effectiveness(len(_Symbol_index)-1) {
+	if e < 0 || e >= Effectiveness(len(_Effectiveness_Symbol_index)-1) {
 		panic("Invalid Effectiveness")
 	}
-	return _Symbol_string[_Symbol_index[e]:_Symbol_index[e+1]]
+	return _Effectiveness_Symbol_string[_Effectiveness_Symbol_index[e]:_Effectiveness_Symbol_index[e+1]]
 }
 
 func (e Effectiveness) Multiplier() float64 {

@@ -73,13 +73,13 @@ func (t Type) LocalName(l lang.Language) string {
 	}
 }
 
-const _Symbol_string = "無炎水草電氷闘毒地飛超虫岩霊竜悪鋼妖"
+const _Type_Symbol_string = "無炎水草電氷闘毒地飛超虫岩霊竜悪鋼妖"
 
-var _Symbol_index = [...]uint8{0, 0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54}
+var _Type_Symbol_index = [...]uint8{0, 0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54}
 
 func (t Type) Symbol() string {
-	if t < 0 || t >= Type(len(_Symbol_index)-1) {
+	if t < 0 || t >= Type(len(_Type_Symbol_index)-1) {
 		panic("Invalid Type")
 	}
-	return _Symbol_string[_Symbol_index[t]:_Symbol_index[t+1]]
+	return _Type_Symbol_string[_Type_Symbol_index[t]:_Type_Symbol_index[t+1]]
 }

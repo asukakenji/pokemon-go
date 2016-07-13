@@ -221,13 +221,13 @@ func (p Pokemon) Weaknesses() []Weakness {
 	weaknesses := make([]Weakness, 0, 19)
 	/* Ideal Implementation:
 	 * ---------------------
-	 * typ.All().Map(func(t typ.Type) Weakness {
+	 * typ.AllTypes().Map(func(t typ.Type) Weakness {
 	 *     return Weakness{t, p.Multiplier(t)}
 	 * }).Filter(func(w Weakness) bool {
 	 *     return w.m > 1.0
 	 * }).Sort(ByMultiplier)
 	 */
-	typ.All().ForEach(func(t typ.Type) {
+	typ.AllTypes().ForEach(func(t typ.Type) {
 		m := p.Multiplier(t)
 		if m > 1.0 {
 			weaknesses = append(weaknesses, Weakness{t, m})
