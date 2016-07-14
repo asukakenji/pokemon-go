@@ -15,7 +15,9 @@ type Iterable interface {
 	// in the Iterable.
 	// Elements resulting true are collected and returned as another Iterable.
 	Filter(predicate func(Type) bool) Iterable
-	// TODO: Write Doc!
+	// Map iterates through and apply the mapper function to each element
+	// in the Iterable.
+	// The return values are collected and returned as a generic.Iterable.
 	Map(mapper func(Type) interface{}) generic.Iterable
 	// Sort sorts (stably) the elements in the Iterable.
 	// The result is returned as another Iterable.
@@ -44,7 +46,7 @@ func (s Slice) Filter(predicate func(Type) bool) Iterable {
 	return result
 }
 
-// TODO: Write Doc!
+// Map implements the same method in the Iterable interface.
 func (s Slice) Map(mapper func(Type) interface{}) generic.Iterable {
 	result := make(generic.Slice, 0)
 	for _, e := range s {
@@ -90,7 +92,7 @@ func (s virtualSlice) Filter(predicate func(Type) bool) Iterable {
 	return result
 }
 
-// TODO: Write Doc!
+// Map implements the same method in the Iterable interface.
 func (s virtualSlice) Map(mapper func(Type) interface{}) generic.Iterable {
 	result := make(generic.Slice, 0)
 	for e := Normal; e <= Fairy; e++ {

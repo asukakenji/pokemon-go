@@ -13,6 +13,10 @@ type Iterable interface {
 	// in the Iterable.
 	// Elements resulting true are collected and returned as another Iterable.
 	Filter(predicate func(interface{}) bool) Iterable
+	// Map iterates through and apply the mapper function to each element
+	// in the Iterable.
+	// The return values are collected and returned as another Iterable.
+	Map(mapper func(interface{}) interface{}) Iterable
 	// Sort sorts (stably) the elements in the Iterable.
 	// The result is returned as another Iterable.
 	Sort(less func(interface{}, interface{}) bool) Iterable
@@ -36,6 +40,15 @@ func (s Slice) Filter(predicate func(interface{}) bool) Iterable {
 		if predicate(e) {
 			result = append(result, e)
 		}
+	}
+	return result
+}
+
+// Map implements the same method in the Iterable interface.
+func (s Slice) Map(mapper func(interface{}) interface{}) Iterable {
+	result := make(Slice, 0)
+	for _, e := range s {
+		result = append(result, mapper(e))
 	}
 	return result
 }

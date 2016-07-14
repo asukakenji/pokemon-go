@@ -2,6 +2,8 @@ package pokemon
 
 import (
 	"sort"
+
+	"github.com/asukakenji/pokemon-go/generic"
 )
 
 // Iterable defines an interface for an iterable collection of Pokemon.
@@ -13,6 +15,10 @@ type Iterable interface {
 	// in the Iterable.
 	// Elements resulting true are collected and returned as another Iterable.
 	Filter(predicate func(Pokemon) bool) Iterable
+	// Map iterates through and apply the mapper function to each element
+	// in the Iterable.
+	// The return values are collected and returned as a generic.Iterable.
+	Map(mapper func(Pokemon) interface{}) generic.Iterable
 	// Sort sorts (stably) the elements in the Iterable.
 	// The result is returned as another Iterable.
 	Sort(less func(Pokemon, Pokemon) bool) Iterable
@@ -36,6 +42,15 @@ func (s Slice) Filter(predicate func(Pokemon) bool) Iterable {
 		if predicate(e) {
 			result = append(result, e)
 		}
+	}
+	return result
+}
+
+// Map implements the same method in the Iterable interface.
+func (s Slice) Map(mapper func(Pokemon) interface{}) generic.Iterable {
+	result := make(generic.Slice, 0)
+	for _, e := range s {
+		result = append(result, mapper(e))
 	}
 	return result
 }
@@ -73,6 +88,15 @@ func (s virtualSlice) Filter(predicate func(Pokemon) bool) Iterable {
 		if predicate(e) {
 			result = append(result, e)
 		}
+	}
+	return result
+}
+
+// Map implements the same method in the Iterable interface.
+func (s virtualSlice) Map(mapper func(Pokemon) interface{}) generic.Iterable {
+	result := make(generic.Slice, 0)
+	for e := Bulbasaur; e <= Mew; e++ {
+		result = append(result, mapper(e))
 	}
 	return result
 }
