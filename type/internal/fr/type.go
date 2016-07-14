@@ -9,7 +9,7 @@ const (
 	Feu
 	Eau
 	Plante
-	Électrique
+	Électrik
 	Glace
 	Combat
 	Poison
@@ -20,7 +20,7 @@ const (
 	Roche
 	Spectre
 	Dragon
-	Ténèbres
+	Ténèbr_full_stop_
 	Acier
 	Fée
 )

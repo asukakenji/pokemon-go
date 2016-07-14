@@ -1,6 +1,8 @@
 package _type
 
 import (
+	"strings"
+
 	"github.com/asukakenji/pokemon-go/lang"
 
 	"github.com/asukakenji/pokemon-go/type/internal/de"
@@ -47,30 +49,31 @@ func (t Type) Id() int {
 }
 
 func (t Type) LocalName(l lang.Language) string {
+	result := ""
 	switch l {
 	case lang.Japanese:
-		return ja.Type(t).String()
+		result = ja.Type(t).String()
 	case lang.English:
-		return en.Type(t).String()
+		result = en.Type(t).String()
 	case lang.French:
-		return fr.Type(t).String()
+		result = fr.Type(t).String()
 	case lang.German:
-		return de.Type(t).String()
+		result = de.Type(t).String()
 	case lang.Italian:
-		return it.Type(t).String()
+		result = it.Type(t).String()
 	case lang.Korean:
-		return ko.Type(t).String()
+		result = ko.Type(t).String()
 	case lang.Spanish:
-		return es.Type(t).String()
+		result = es.Type(t).String()
 	case lang.ChineseChina:
-		return zhCN.Type(t).String()
+		result = zhCN.Type(t).String()
 	case lang.ChineseHongKong:
-		return zhHK.Type(t).String()
+		result = zhHK.Type(t).String()
 	case lang.ChineseTaiwan:
-		return zhTW.Type(t).String()
-	default:
-		return ""
+		result = zhTW.Type(t).String()
 	}
+	result = strings.Replace(result, "_full_stop_", ".", -1)
+	return result
 }
 
 const _Symbol_string = "無炎水草電氷闘毒地飛超虫岩霊竜悪鋼妖"
