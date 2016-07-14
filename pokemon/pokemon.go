@@ -1,9 +1,15 @@
 package pokemon
 
 import (
+	"strings"
+
 	"github.com/asukakenji/pokemon-go/eff"
 	"github.com/asukakenji/pokemon-go/generic"
 	"github.com/asukakenji/pokemon-go/lang"
+
+	"github.com/asukakenji/pokemon-go/pokemon/internal/en"
+	"github.com/asukakenji/pokemon-go/pokemon/internal/ja"
+
 	typ "github.com/asukakenji/pokemon-go/type"
 	"github.com/asukakenji/pokemon-go/weak"
 )
@@ -178,7 +184,37 @@ func (p Pokemon) self() *_pokemon {
 
 // TODO: Write this!
 func (p Pokemon) LocalName(l lang.Language) string {
-	return ""
+	result := ""
+	switch l {
+	case lang.Japanese:
+		result = ja.Pokemon(p).String()
+	case lang.English:
+		result = en.Pokemon(p).String()
+	case lang.French:
+		result = ""
+	case lang.German:
+		result = ""
+	case lang.Italian:
+		result = ""
+	case lang.Korean:
+		result = ""
+	case lang.Spanish:
+		result = ""
+	case lang.ChineseChina:
+		result = ""
+	case lang.ChineseHongKong:
+		result = ""
+	case lang.ChineseTaiwan:
+		result = ""
+	default:
+		return ""
+	}
+	result = strings.Replace(result, "_female_", "♀", -1)
+	result = strings.Replace(result, "_male_", "♂", -1)
+	result = strings.Replace(result, "_apostrophe_", "'", -1)
+	result = strings.Replace(result, "_full_stop_", ".", -1)
+	result = strings.Replace(result, "_space_", " ", -1)
+	return result
 }
 
 func (p Pokemon) BaseCombatPower() int {
