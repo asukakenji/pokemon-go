@@ -1,38 +1,36 @@
-package weak
+package generic
 
 import (
 	"sort"
-
-	"github.com/asukakenji/pokemon-go/generic"
 )
 
-// Iterable defines an interface for an iterable collection of Weakness.
+// Iterable defines an interface for an iterable collection of interface{}.
 type Iterable interface {
 	// ForEach iterates through and apply the consumer function to each element
 	// in the Iterable.
-	ForEach(consumer func(Weakness))
+	ForEach(consumer func(interface{}))
 	// Filter iterates through and apply the predicate function to each element
 	// in the Iterable.
 	// Elements resulting true are collected and returned as another Iterable.
-	Filter(predicate func(Weakness) bool) Iterable
+	Filter(predicate func(interface{}) bool) Iterable
 	// Sort sorts (stably) the elements in the Iterable.
 	// The result is returned as another Iterable.
-	Sort(less func(Weakness, Weakness) bool) Iterable
+	Sort(less func(interface{}, interface{}) bool) Iterable
 }
 
 // Slice implements the Iterable interface.
-// It represents a slice of Weakness.
-type Slice []Weakness
+// It represents a slice of interface{}.
+type Slice []interface{}
 
 // ForEach implements the same method in the Iterable interface.
-func (s Slice) ForEach(consumer func(Weakness)) {
+func (s Slice) ForEach(consumer func(interface{})) {
 	for _, e := range s {
 		consumer(e)
 	}
 }
 
 // Filter implements the same method in the Iterable interface.
-func (s Slice) Filter(predicate func(Weakness) bool) Iterable {
+func (s Slice) Filter(predicate func(interface{}) bool) Iterable {
 	result := make(Slice, 0)
 	for _, e := range s {
 		if predicate(e) {
@@ -43,48 +41,9 @@ func (s Slice) Filter(predicate func(Weakness) bool) Iterable {
 }
 
 // Sort implements the same method in the Iterable interface.
-func (s Slice) Sort(less func(Weakness, Weakness) bool) Iterable {
+func (s Slice) Sort(less func(interface{}, interface{}) bool) Iterable {
 	result := make(Slice, len(s))
 	copy(result, s)
-	sort.Stable(sortableSlice{result, less})
-	return result
-}
-
-// TODO: Write Doc!
-func Wrap(iterable generic.Iterable) Iterable {
-	return wrappedIterable{iterable}
-}
-
-// TODO: Write Doc!
-type wrappedIterable struct {
-	iterable generic.Iterable
-}
-
-// ForEach implements the same method in the Iterable interface.
-func (s wrappedIterable) ForEach(consumer func(Weakness)) {
-	s.iterable.ForEach(func(e interface{}) {
-		consumer(e.(Weakness))
-	})
-}
-
-// Filter implements the same method in the Iterable interface.
-func (s wrappedIterable) Filter(predicate func(Weakness) bool) Iterable {
-	result := make(Slice, 0)
-	s.iterable.ForEach(func(e interface{}) {
-		e2 := e.(Weakness)
-		if predicate(e2) {
-			result = append(result, e2)
-		}
-	})
-	return result
-}
-
-// Sort implements the same method in the Iterable interface.
-func (s wrappedIterable) Sort(less func(Weakness, Weakness) bool) Iterable {
-	result := make(Slice, 0)
-	s.iterable.ForEach(func(e interface{}) {
-		result = append(result, e.(Weakness))
-	})
 	sort.Stable(sortableSlice{result, less})
 	return result
 }
@@ -94,7 +53,7 @@ func (s wrappedIterable) Sort(less func(Weakness, Weakness) bool) Iterable {
 // and as a wrapper for a Slice and a custom comparison function.
 type sortableSlice struct {
 	slice Slice
-	less  func(Weakness, Weakness) bool
+	less  func(interface{}, interface{}) bool
 }
 
 // Len implements the same method in the sort.Interface interface.

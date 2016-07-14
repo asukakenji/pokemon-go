@@ -2,6 +2,8 @@ package _type
 
 import (
 	"sort"
+
+	"github.com/asukakenji/pokemon-go/generic"
 )
 
 // Iterable defines an interface for an iterable collection of Type.
@@ -13,6 +15,8 @@ type Iterable interface {
 	// in the Iterable.
 	// Elements resulting true are collected and returned as another Iterable.
 	Filter(predicate func(Type) bool) Iterable
+	// TODO: Write Doc!
+	Map(mapper func(Type) interface{}) generic.Iterable
 	// Sort sorts (stably) the elements in the Iterable.
 	// The result is returned as another Iterable.
 	Sort(less func(Type, Type) bool) Iterable
@@ -36,6 +40,15 @@ func (s Slice) Filter(predicate func(Type) bool) Iterable {
 		if predicate(e) {
 			result = append(result, e)
 		}
+	}
+	return result
+}
+
+// TODO: Write Doc!
+func (s Slice) Map(mapper func(Type) interface{}) generic.Iterable {
+	result := make(generic.Slice, 0)
+	for _, e := range s {
+		result = append(result, mapper(e))
 	}
 	return result
 }
@@ -77,6 +90,15 @@ func (s virtualSlice) Filter(predicate func(Type) bool) Iterable {
 	return result
 }
 
+// TODO: Write Doc!
+func (s virtualSlice) Map(mapper func(Type) interface{}) generic.Iterable {
+	result := make(generic.Slice, 0)
+	for e := Normal; e <= Fairy; e++ {
+		result = append(result, mapper(e))
+	}
+	return result
+}
+
 // Sort implements the same method in the Iterable interface.
 func (s virtualSlice) Sort(less func(Type, Type) bool) Iterable {
 	result := make(Slice, Fairy-Normal+1)
@@ -109,13 +131,3 @@ func (s sortableSlice) Less(i, j int) bool {
 func (s sortableSlice) Swap(i, j int) {
 	s.slice[i], s.slice[j] = s.slice[j], s.slice[i]
 }
-
-/*
-func (ts TypeSlice) Map(mapper func(Type) interface{}) []interface{} {
-	result := make([]interface{}, 0)
-	for _, t := range ts {
-		result = append(result, mapper(t))
-	}
-	return result
-}
-*/

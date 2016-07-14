@@ -2,6 +2,7 @@ package pokemon
 
 import (
 	"github.com/asukakenji/pokemon-go/eff"
+	"github.com/asukakenji/pokemon-go/generic"
 	"github.com/asukakenji/pokemon-go/lang"
 	typ "github.com/asukakenji/pokemon-go/type"
 	"github.com/asukakenji/pokemon-go/weak"
@@ -218,23 +219,11 @@ func (p Pokemon) Multiplier(t typ.Type) float64 {
 }
 
 func (p Pokemon) Weaknesses() weak.Iterable {
-	weaknesses := make(weak.Slice, 0, 19)
-	/* Ideal Implementation:
-	 * ---------------------
-	 * typ.All().Map(func(t typ.Type) Weakness {
-	 *     return Weakness{t, p.Multiplier(t)}
-	 * }).Filter(func(w Weakness) bool {
-	 *     return w.m > 1.0
-	 * }).Sort(ByMultiplier)
-	 */
-	typ.All().ForEach(func(t typ.Type) {
-		m := p.Multiplier(t)
-		if m > 1.0 {
-			weaknesses = append(weaknesses, weak.Weakness{t, m})
-		}
-	})
-	weaknesses.Sort(func(w1, w2 weak.Weakness) bool {
-		return w1.Multiplier > w2.Multiplier
-	})
-	return weaknesses
+	mapper := func(t typ.Type) interface{} {
+		return weak.Weakness{t, p.Multiplier(t)}
+	}
+	predicate := func(w weak.Weakness) bool {
+		return w.Multiplier > 1.0
+	}
+	return weak.Wrap(typ.All().Map(mapper)).Filter(predicate).Sort(weak.ByMultiplier(generic.Descending))
 }
