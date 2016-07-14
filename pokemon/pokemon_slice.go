@@ -4,107 +4,108 @@ import (
 	"sort"
 )
 
-// PokemonIterable defines an interface for an iterable collection of Pokemon.
-type PokemonIterable interface {
+// Iterable defines an interface for an iterable collection of Pokemon.
+type Iterable interface {
 	// ForEach iterates through and apply the consumer function to each element
-	// in the PokemonIterable.
+	// in the Iterable.
 	ForEach(consumer func(Pokemon))
 	// Filter iterates through and apply the predicate function to each element
-	// in the PokemonIterable. Elements returning true are returned as another
-	// PokemonIterable.
-	Filter(predicate func(Pokemon) bool) PokemonIterable
-	// Sort sorts (stably) the elements in the PokemonIterable. The result is
-	// returned as another PokemonIterable.
-	Sort(less func(Pokemon, Pokemon) bool) PokemonIterable
+	// in the Iterable.
+	// Elements resulting true are collected and returned as another Iterable.
+	Filter(predicate func(Pokemon) bool) Iterable
+	// Sort sorts (stably) the elements in the Iterable.
+	// The result is returned as another Iterable.
+	Sort(less func(Pokemon, Pokemon) bool) Iterable
 }
 
-// PokemonSlice implements the PokemonIterable interface. It represents a slice
-// of Pokemon.
-type PokemonSlice []Pokemon
+// Slice implements the Iterable interface.
+// It represents a slice of Pokemon.
+type Slice []Pokemon
 
-// ForEach implements the same method in the PokemonIterable interface.
-func (ps PokemonSlice) ForEach(consumer func(Pokemon)) {
-	for _, p := range ps {
-		consumer(p)
+// ForEach implements the same method in the Iterable interface.
+func (s Slice) ForEach(consumer func(Pokemon)) {
+	for _, e := range s {
+		consumer(e)
 	}
 }
 
-// Filter implements the same method in the PokemonIterable interface.
-func (ps PokemonSlice) Filter(predicate func(Pokemon) bool) PokemonIterable {
-	result := make(PokemonSlice, 0)
-	for _, p := range ps {
-		if predicate(p) {
-			result = append(result, p)
+// Filter implements the same method in the Iterable interface.
+func (s Slice) Filter(predicate func(Pokemon) bool) Iterable {
+	result := make(Slice, 0)
+	for _, e := range s {
+		if predicate(e) {
+			result = append(result, e)
 		}
 	}
 	return result
 }
 
-// Sort implements the same method in the PokemonIterable interface.
-func (ps PokemonSlice) Sort(less func(Pokemon, Pokemon) bool) PokemonIterable {
-	result := make(PokemonSlice, len(ps))
-	copy(result, ps)
-	sort.Stable(sortablePokemonSlice{result, less})
+// Sort implements the same method in the Iterable interface.
+func (s Slice) Sort(less func(Pokemon, Pokemon) bool) Iterable {
+	result := make(Slice, len(s))
+	copy(result, s)
+	sort.Stable(sortableSlice{result, less})
 	return result
 }
 
-// AllPokemons returns all Pokemon's as a PokemonIterable
-func All() PokemonIterable {
-	return virtualPokemonSlice(0)
+// All returns all meaningful values of Pokemon as an Iterable.
+func All() Iterable {
+	return virtualSlice(0)
 }
 
-// virtualPokemonSlice implements the PokemonIterable interface. It is the
-// concrete type of the result returned by All(). The elements are generated as
-// needed.
-type virtualPokemonSlice int
+// virtualSlice implements the Iterable interface.
+// It is the concrete type of the result returned by All().
+// Instead of building a slice of all values,
+// the elements are generated on-the-fly when needed.
+type virtualSlice int
 
-// ForEach implements the same method in the PokemonIterable interface.
-func (ps virtualPokemonSlice) ForEach(consumer func(Pokemon)) {
-	for p := Bulbasaur; p <= Mew; p++ {
-		consumer(p)
+// ForEach implements the same method in the Iterable interface.
+func (s virtualSlice) ForEach(consumer func(Pokemon)) {
+	for e := Bulbasaur; e <= Mew; e++ {
+		consumer(e)
 	}
 }
 
-// Filter implements the same method in the PokemonIterable interface.
-func (ps virtualPokemonSlice) Filter(predicate func(Pokemon) bool) PokemonIterable {
-	result := make(PokemonSlice, 0)
-	for p := Bulbasaur; p <= Mew; p++ {
-		if predicate(p) {
-			result = append(result, p)
+// Filter implements the same method in the Iterable interface.
+func (s virtualSlice) Filter(predicate func(Pokemon) bool) Iterable {
+	result := make(Slice, 0)
+	for e := Bulbasaur; e <= Mew; e++ {
+		if predicate(e) {
+			result = append(result, e)
 		}
 	}
 	return result
 }
 
-// Sort implements the same method in the PokemonIterable interface.
-func (ps virtualPokemonSlice) Sort(less func(Pokemon, Pokemon) bool) PokemonIterable {
-	result := make(PokemonSlice, 151)
-	for i, p := 0, Bulbasaur; p <= Mew; i, p = i+1, p+1 {
-		result[i] = p
+// Sort implements the same method in the Iterable interface.
+func (s virtualSlice) Sort(less func(Pokemon, Pokemon) bool) Iterable {
+	result := make(Slice, Mew-Bulbasaur+1)
+	for i, e := 0, Bulbasaur; e <= Mew; i, e = i+1, e+1 {
+		result[i] = e
 	}
-	sort.Stable(sortablePokemonSlice{result, less})
+	sort.Stable(sortableSlice{result, less})
 	return result
 }
 
-// sortablePokemonSlice implements the sort.Interface interface. It serves as
-// an adapter for sort.Interface and a wrapper for a PokemonSlice and a custom
-// comparison function.
-type sortablePokemonSlice struct {
-	slice PokemonSlice
+// sortableSlice implements the sort.Interface interface.
+// It serves as an adapter for sort.Interface,
+// and as a wrapper for a Slice and a custom comparison function.
+type sortableSlice struct {
+	slice Slice
 	less  func(Pokemon, Pokemon) bool
 }
 
 // Len implements the same method in the sort.Interface interface.
-func (ps sortablePokemonSlice) Len() int {
-	return len(ps.slice)
+func (s sortableSlice) Len() int {
+	return len(s.slice)
 }
 
 // Less implements the same method in the sort.Interface interface.
-func (ps sortablePokemonSlice) Less(i, j int) bool {
-	return ps.less(ps.slice[i], ps.slice[j])
+func (s sortableSlice) Less(i, j int) bool {
+	return s.less(s.slice[i], s.slice[j])
 }
 
 // Swap implements the same method in the sort.Interface interface.
-func (ps sortablePokemonSlice) Swap(i, j int) {
-	ps.slice[i], ps.slice[j] = ps.slice[j], ps.slice[i]
+func (s sortableSlice) Swap(i, j int) {
+	s.slice[i], s.slice[j] = s.slice[j], s.slice[i]
 }

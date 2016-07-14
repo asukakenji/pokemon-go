@@ -1,8 +1,6 @@
 package pokemon
 
 import (
-	"sort"
-
 	"github.com/asukakenji/pokemon-go/eff"
 	"github.com/asukakenji/pokemon-go/lang"
 	typ "github.com/asukakenji/pokemon-go/type"
@@ -219,8 +217,8 @@ func (p Pokemon) Multiplier(t typ.Type) float64 {
 	return eff.For(t, p.Type1()).Multiplier() * eff.For(t, p.Type2()).Multiplier()
 }
 
-func (p Pokemon) Weaknesses() []weak.Weakness {
-	weaknesses := make([]weak.Weakness, 0, 19)
+func (p Pokemon) Weaknesses() weak.Iterable {
+	weaknesses := make(weak.Slice, 0, 19)
 	/* Ideal Implementation:
 	 * ---------------------
 	 * typ.All().Map(func(t typ.Type) Weakness {
@@ -235,6 +233,8 @@ func (p Pokemon) Weaknesses() []weak.Weakness {
 			weaknesses = append(weaknesses, weak.Weakness{t, m})
 		}
 	})
-	sort.Stable(weak.WeaknessSlice(weaknesses))
+	weaknesses.Sort(func(w1, w2 weak.Weakness) bool {
+		return w1.Multiplier > w2.Multiplier
+	})
 	return weaknesses
 }

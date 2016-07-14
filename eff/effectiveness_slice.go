@@ -4,23 +4,35 @@ import (
 	"sort"
 )
 
-type EffectivenessIterable interface {
+// Iterable defines an interface for an iterable collection of Effectiveness.
+type Iterable interface {
+	// ForEach iterates through and apply the consumer function to each element
+	// in the Iterable.
 	ForEach(consumer func(Effectiveness))
-	Filter(predicate func(Effectiveness) bool) EffectivenessIterable
-	Sort(less func(Effectiveness, Effectiveness) bool) EffectivenessIterable
+	// Filter iterates through and apply the predicate function to each element
+	// in the Iterable.
+	// Elements resulting true are collected and returned as another Iterable.
+	Filter(predicate func(Effectiveness) bool) Iterable
+	// Sort sorts (stably) the elements in the Iterable.
+	// The result is returned as another Iterable.
+	Sort(less func(Effectiveness, Effectiveness) bool) Iterable
 }
 
-type EffectivenessSlice []Effectiveness
+// Slice implements the Iterable interface.
+// It represents a slice of Effectiveness.
+type Slice []Effectiveness
 
-func (es EffectivenessSlice) ForEach(consumer func(Effectiveness)) {
-	for _, e := range es {
+// ForEach implements the same method in the Iterable interface.
+func (s Slice) ForEach(consumer func(Effectiveness)) {
+	for _, e := range s {
 		consumer(e)
 	}
 }
 
-func (es EffectivenessSlice) Filter(predicate func(Effectiveness) bool) EffectivenessIterable {
-	result := make(EffectivenessSlice, 0)
-	for _, e := range es {
+// Filter implements the same method in the Iterable interface.
+func (s Slice) Filter(predicate func(Effectiveness) bool) Iterable {
+	result := make(Slice, 0)
+	for _, e := range s {
 		if predicate(e) {
 			result = append(result, e)
 		}
@@ -28,27 +40,35 @@ func (es EffectivenessSlice) Filter(predicate func(Effectiveness) bool) Effectiv
 	return result
 }
 
-func (es EffectivenessSlice) Sort(less func(Effectiveness, Effectiveness) bool) EffectivenessIterable {
-	result := make(EffectivenessSlice, len(es))
-	copy(result, es)
-	sort.Stable(sortableEffectivenessSlice{result, less})
+// Sort implements the same method in the Iterable interface.
+func (s Slice) Sort(less func(Effectiveness, Effectiveness) bool) Iterable {
+	result := make(Slice, len(s))
+	copy(result, s)
+	sort.Stable(sortableSlice{result, less})
 	return result
 }
 
-func All() EffectivenessIterable {
-	return virtualEffectivenessSlice(0)
+// All returns all meaningful values of Effectiveness as an Iterable.
+func All() Iterable {
+	return virtualSlice(0)
 }
 
-type virtualEffectivenessSlice int
+// virtualSlice implements the Iterable interface.
+// It is the concrete type of the result returned by All().
+// Instead of building a slice of all values,
+// the elements are generated on-the-fly when needed.
+type virtualSlice int
 
-func (es virtualEffectivenessSlice) ForEach(consumer func(Effectiveness)) {
+// ForEach implements the same method in the Iterable interface.
+func (s virtualSlice) ForEach(consumer func(Effectiveness)) {
 	for e := EX; e <= EO; e++ {
 		consumer(e)
 	}
 }
 
-func (es virtualEffectivenessSlice) Filter(predicate func(Effectiveness) bool) EffectivenessIterable {
-	result := make(EffectivenessSlice, 0)
+// Filter implements the same method in the Iterable interface.
+func (s virtualSlice) Filter(predicate func(Effectiveness) bool) Iterable {
+	result := make(Slice, 0)
 	for e := EX; e <= EO; e++ {
 		if predicate(e) {
 			result = append(result, e)
@@ -57,28 +77,35 @@ func (es virtualEffectivenessSlice) Filter(predicate func(Effectiveness) bool) E
 	return result
 }
 
-func (es virtualEffectivenessSlice) Sort(less func(Effectiveness, Effectiveness) bool) EffectivenessIterable {
-	result := make(EffectivenessSlice, 4)
+// Sort implements the same method in the Iterable interface.
+func (s virtualSlice) Sort(less func(Effectiveness, Effectiveness) bool) Iterable {
+	result := make(Slice, EO-EX+1)
 	for i, e := 0, EX; e <= EO; i, e = i+1, e+1 {
 		result[i] = e
 	}
-	sort.Stable(sortableEffectivenessSlice{result, less})
+	sort.Stable(sortableSlice{result, less})
 	return result
 }
 
-type sortableEffectivenessSlice struct {
-	slice EffectivenessSlice
+// sortableSlice implements the sort.Interface interface.
+// It serves as an adapter for sort.Interface,
+// and as a wrapper for a Slice and a custom comparison function.
+type sortableSlice struct {
+	slice Slice
 	less  func(Effectiveness, Effectiveness) bool
 }
 
-func (es sortableEffectivenessSlice) Len() int {
-	return len(es.slice)
+// Len implements the same method in the sort.Interface interface.
+func (s sortableSlice) Len() int {
+	return len(s.slice)
 }
 
-func (es sortableEffectivenessSlice) Less(i, j int) bool {
-	return es.less(es.slice[i], es.slice[j])
+// Less implements the same method in the sort.Interface interface.
+func (s sortableSlice) Less(i, j int) bool {
+	return s.less(s.slice[i], s.slice[j])
 }
 
-func (es sortableEffectivenessSlice) Swap(i, j int) {
-	es.slice[i], es.slice[j] = es.slice[j], es.slice[i]
+// Swap implements the same method in the sort.Interface interface.
+func (s sortableSlice) Swap(i, j int) {
+	s.slice[i], s.slice[j] = s.slice[j], s.slice[i]
 }
