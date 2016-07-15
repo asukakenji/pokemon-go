@@ -16,7 +16,7 @@ const (
 	Terra
 	Volante
 	Psico
-	Coleottero
+	Coleott_full_stop_
 	Roccia
 	Spettro
 	Drago
