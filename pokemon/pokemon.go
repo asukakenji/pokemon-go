@@ -13,6 +13,11 @@ import (
 	"github.com/asukakenji/pokemon-go/pokemon/internal/fr"
 	"github.com/asukakenji/pokemon-go/pokemon/internal/it"
 	"github.com/asukakenji/pokemon-go/pokemon/internal/ja"
+	"github.com/asukakenji/pokemon-go/pokemon/internal/zh-CHS"
+	"github.com/asukakenji/pokemon-go/pokemon/internal/zh-CHT"
+	"github.com/asukakenji/pokemon-go/pokemon/internal/zh-CN"
+	"github.com/asukakenji/pokemon-go/pokemon/internal/zh-HK"
+	"github.com/asukakenji/pokemon-go/pokemon/internal/zh-TW"
 
 	typ "github.com/asukakenji/pokemon-go/type"
 	"github.com/asukakenji/pokemon-go/weak"
@@ -204,18 +209,23 @@ func (p Pokemon) LocalName(l lang.Language) string {
 		result = ""
 	case lang.Spanish:
 		result = es.Pokemon(p).String()
+	case lang.ChineseSimplified:
+		result = zhCHS.Pokemon(p).String()
+	case lang.ChineseTraditional:
+		result = zhCHT.Pokemon(p).String()
 	case lang.ChineseChina:
-		result = ""
+		result = zhCN.Pokemon(p).String()
 	case lang.ChineseHongKong:
-		result = ""
+		result = zhHK.Pokemon(p).String()
 	case lang.ChineseTaiwan:
-		result = ""
+		result = zhTW.Pokemon(p).String()
 	}
 	result = strings.Replace(result, "_female_", "♀", -1)
 	result = strings.Replace(result, "_male_", "♂", -1)
 	result = strings.Replace(result, "_apostrophe_", "'", -1)
 	result = strings.Replace(result, "_full_stop_", ".", -1)
 	result = strings.Replace(result, "_space_", " ", -1)
+	result = strings.Replace(result, "_fullwidth_digit_three_", "３", -1)
 	return result
 }
 

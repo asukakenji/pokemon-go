@@ -11,10 +11,10 @@ const (
 	Italian
 	Korean
 	Spanish
+	ChineseSimplified
+	ChineseTraditional
 	ChineseChina
 	ChineseHongKong
-	// ChineseMacau
-	// ChineseSingapore
 	ChineseTaiwan
 )
 
@@ -36,12 +36,16 @@ func (l Language) LocalName() string {
 		return "한국어"
 	case Spanish:
 		return "Español"
+	case ChineseSimplified:
+		return "简体中文（官方译名）"
+	case ChineseTraditional:
+		return "繁體中文（官方譯名）"
 	case ChineseChina:
-		return "中文（中国）"
+		return "简体中文（中国译名）"
 	case ChineseHongKong:
-		return "中文（香港）"
+		return "繁體中文（香港譯名）"
 	case ChineseTaiwan:
-		return "中文（台灣）"
+		return "繁體中文（台灣譯名）"
 	default:
 		return ""
 	}

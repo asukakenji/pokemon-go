@@ -4,9 +4,9 @@ package lang
 
 import "fmt"
 
-const _Language_name = "JapaneseEnglishFrenchGermanItalianKoreanSpanishChineseChinaChineseHongKongChineseTaiwan"
+const _Language_name = "JapaneseEnglishFrenchGermanItalianKoreanSpanishChineseSimplifiedChineseTraditionalChineseChinaChineseHongKongChineseTaiwan"
 
-var _Language_index = [...]uint8{0, 8, 15, 21, 27, 34, 40, 47, 59, 74, 87}
+var _Language_index = [...]uint8{0, 8, 15, 21, 27, 34, 40, 47, 64, 82, 94, 109, 122}
 
 func (i Language) String() string {
 	if i < 0 || i >= Language(len(_Language_index)-1) {
