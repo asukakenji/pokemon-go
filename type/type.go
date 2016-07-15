@@ -48,6 +48,16 @@ func (t Type) Id() int {
 	return int(t)
 }
 
+// ja: タイプ
+// en: Type
+// fr: Type
+// de: Typ
+// it: Tipo
+// es: Tipo
+// zh-CN: 系
+// zh-HK: 系
+// zh-TW: 系
+
 func (t Type) LocalName(l lang.Language) string {
 	result := ""
 	switch l {

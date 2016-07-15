@@ -9,7 +9,7 @@ const (
 	火               // OK: https://youtu.be/dFQ3cr6lY7Q?t=3m3s , https://youtu.be/4Ygday15XxM?t=27s
 	水               // OK: https://youtu.be/EkCoEz8FebU?t=4m53s
 	草               //
-	電擊              // OK: https://youtu.be/ufS3IjJwXY0?t=46s
+	電擊              // OK: https://youtu.be/ufS3IjJwXY0?t=46s , https://youtu.be/aKhuwCZuWgg?t=4m13s
 	冰               //
 	格鬥              //
 	毒               //
