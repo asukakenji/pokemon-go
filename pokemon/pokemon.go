@@ -7,6 +7,7 @@ import (
 	"github.com/asukakenji/pokemon-go/generic"
 	"github.com/asukakenji/pokemon-go/lang"
 
+	"github.com/asukakenji/pokemon-go/pokemon/internal/de"
 	"github.com/asukakenji/pokemon-go/pokemon/internal/en"
 	"github.com/asukakenji/pokemon-go/pokemon/internal/fr"
 	"github.com/asukakenji/pokemon-go/pokemon/internal/ja"
@@ -194,7 +195,7 @@ func (p Pokemon) LocalName(l lang.Language) string {
 	case lang.French:
 		result = fr.Pokemon(p).String()
 	case lang.German:
-		result = ""
+		result = de.Pokemon(p).String()
 	case lang.Italian:
 		result = ""
 	case lang.Korean:
@@ -207,8 +208,6 @@ func (p Pokemon) LocalName(l lang.Language) string {
 		result = ""
 	case lang.ChineseTaiwan:
 		result = ""
-	default:
-		return ""
 	}
 	result = strings.Replace(result, "_female_", "♀", -1)
 	result = strings.Replace(result, "_male_", "♂", -1)
