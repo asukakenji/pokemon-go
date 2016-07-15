@@ -16,7 +16,7 @@ const (
 	Tierra
 	Volador
 	Psíquico
-	Insecto // Bicho
+	Bicho // Insecto
 	Roca
 	Fantasma
 	Dragón

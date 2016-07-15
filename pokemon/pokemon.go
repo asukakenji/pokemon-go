@@ -9,6 +9,7 @@ import (
 
 	"github.com/asukakenji/pokemon-go/pokemon/internal/de"
 	"github.com/asukakenji/pokemon-go/pokemon/internal/en"
+	"github.com/asukakenji/pokemon-go/pokemon/internal/es"
 	"github.com/asukakenji/pokemon-go/pokemon/internal/fr"
 	"github.com/asukakenji/pokemon-go/pokemon/internal/it"
 	"github.com/asukakenji/pokemon-go/pokemon/internal/ja"
@@ -202,7 +203,7 @@ func (p Pokemon) LocalName(l lang.Language) string {
 	case lang.Korean:
 		result = ""
 	case lang.Spanish:
-		result = ""
+		result = es.Pokemon(p).String()
 	case lang.ChineseChina:
 		result = ""
 	case lang.ChineseHongKong:
