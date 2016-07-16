@@ -17,7 +17,6 @@ import (
 	"github.com/asukakenji/pokemon-go/eff/internal/zh-TW"
 
 	"github.com/asukakenji/pokemon-go/lang"
-	typ "github.com/asukakenji/pokemon-go/type"
 )
 
 // Effectiveness
@@ -33,12 +32,6 @@ const (
 )
 
 //go:generate stringer -type=Effectiveness
-
-// moveType: The type of the move (attacker);
-// pokemonType: The type of the pokemon (defender).
-func For(moveType, pokemonType typ.Type) Effectiveness {
-	return table[pokemonType][moveType]
-}
 
 func (e Effectiveness) Id() int {
 	return int(e)

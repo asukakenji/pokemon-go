@@ -3,7 +3,6 @@ package pokemon
 import (
 	"strings"
 
-	"github.com/asukakenji/pokemon-go/eff"
 	"github.com/asukakenji/pokemon-go/generic"
 	"github.com/asukakenji/pokemon-go/lang"
 
@@ -269,8 +268,8 @@ func (p Pokemon) CandyToEvolve() (Pokemon, int) {
 }
 
 // Multiplier to be applied when this Pokemon is attacked by the specified type of moves
-func (p Pokemon) Multiplier(t typ.Type) float64 {
-	return eff.For(t, p.Type1()).Multiplier() * eff.For(t, p.Type2()).Multiplier()
+func (p Pokemon) Multiplier(moveType typ.Type) float64 {
+	return p.Type1().AttackedBy(moveType).Multiplier() * p.Type2().AttackedBy(moveType).Multiplier()
 }
 
 func (p Pokemon) Weaknesses() weak.Iterable {

@@ -3,6 +3,7 @@ package _type
 import (
 	"strings"
 
+	"github.com/asukakenji/pokemon-go/eff"
 	"github.com/asukakenji/pokemon-go/lang"
 
 	"github.com/asukakenji/pokemon-go/type/internal/de"
@@ -90,6 +91,12 @@ func (t Type) LocalName(l lang.Language) string {
 	}
 	result = strings.Replace(result, "_full_stop_", ".", -1)
 	return result
+}
+
+// t: The type of the pokemon (defender).
+// moveType: The type of the move (attacker);
+func (t Type) AttackedBy(moveType Type) eff.Effectiveness {
+	return effectivenesses[t][moveType]
 }
 
 const _Symbol_string = "無炎水草電氷闘毒地飛超虫岩霊竜悪鋼妖"
