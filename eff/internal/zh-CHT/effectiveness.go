@@ -1,13 +1,13 @@
-package it
+package zhCHT
 
 // Effectiveness
 type Effectiveness int8
 
 const (
-	Nessun_Effetto Effectiveness = iota
-	Non_Molto_Efficace
-	Normale
-	Super_Efficace
+	無效 Effectiveness = iota
+	不佳
+	普通
+	超群
 )
 
 //go:generate stringer -type=Effectiveness

@@ -4,9 +4,9 @@ package zhCN
 
 import "fmt"
 
-const _Effectiveness_name = "無効今一つ通常抜群"
+const _Effectiveness_name = "无效不佳普通超群"
 
-var _Effectiveness_index = [...]uint8{0, 6, 15, 21, 27}
+var _Effectiveness_index = [...]uint8{0, 6, 12, 18, 24}
 
 func (i Effectiveness) String() string {
 	if i < 0 || i >= Effectiveness(len(_Effectiveness_index)-1) {

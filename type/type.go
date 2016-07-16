@@ -12,6 +12,8 @@ import (
 	"github.com/asukakenji/pokemon-go/type/internal/it"
 	"github.com/asukakenji/pokemon-go/type/internal/ja"
 	"github.com/asukakenji/pokemon-go/type/internal/ko"
+	"github.com/asukakenji/pokemon-go/type/internal/zh-CHS"
+	"github.com/asukakenji/pokemon-go/type/internal/zh-CHT"
 	"github.com/asukakenji/pokemon-go/type/internal/zh-CN"
 	"github.com/asukakenji/pokemon-go/type/internal/zh-HK"
 	"github.com/asukakenji/pokemon-go/type/internal/zh-TW"
@@ -75,6 +77,10 @@ func (t Type) LocalName(l lang.Language) string {
 		result = ko.Type(t).String()
 	case lang.Spanish:
 		result = es.Type(t).String()
+	case lang.ChineseSimplified:
+		result = zhCHS.Type(t).String()
+	case lang.ChineseTraditional:
+		result = zhCHT.Type(t).String()
 	case lang.ChineseChina:
 		result = zhCN.Type(t).String()
 	case lang.ChineseHongKong:

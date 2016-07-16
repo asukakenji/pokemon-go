@@ -10,6 +10,8 @@ import (
 	"github.com/asukakenji/pokemon-go/eff/internal/it"
 	"github.com/asukakenji/pokemon-go/eff/internal/ja"
 	"github.com/asukakenji/pokemon-go/eff/internal/ko"
+	"github.com/asukakenji/pokemon-go/eff/internal/zh-CHS"
+	"github.com/asukakenji/pokemon-go/eff/internal/zh-CHT"
 	"github.com/asukakenji/pokemon-go/eff/internal/zh-CN"
 	"github.com/asukakenji/pokemon-go/eff/internal/zh-HK"
 	"github.com/asukakenji/pokemon-go/eff/internal/zh-TW"
@@ -42,31 +44,45 @@ func (e Effectiveness) Id() int {
 	return int(e)
 }
 
+// ja: 効果
+// en: Effectiveness
+// fr:
+// de:
+// it:
+// ko: 효과
+// es:
+// zh: 效果
+
 func (e Effectiveness) LocalName(l lang.Language) string {
+	result := ""
 	switch l {
 	case lang.Japanese:
-		return ja.Effectiveness(e).String()
+		result = ja.Effectiveness(e).String()
 	case lang.English:
-		return strings.Replace(en.Effectiveness(e).String(), "_", " ", -1)
+		result = en.Effectiveness(e).String()
 	case lang.French:
-		return fr.Effectiveness(e).String()
+		result = fr.Effectiveness(e).String()
 	case lang.German:
-		return de.Effectiveness(e).String()
+		result = de.Effectiveness(e).String()
 	case lang.Italian:
-		return it.Effectiveness(e).String()
+		result = it.Effectiveness(e).String()
 	case lang.Korean:
-		return ko.Effectiveness(e).String()
+		result = ko.Effectiveness(e).String()
 	case lang.Spanish:
-		return es.Effectiveness(e).String()
+		result = es.Effectiveness(e).String()
+	case lang.ChineseSimplified:
+		result = zhCHS.Effectiveness(e).String()
+	case lang.ChineseTraditional:
+		result = zhCHT.Effectiveness(e).String()
 	case lang.ChineseChina:
-		return zhCN.Effectiveness(e).String()
+		result = zhCN.Effectiveness(e).String()
 	case lang.ChineseHongKong:
-		return zhHK.Effectiveness(e).String()
+		result = zhHK.Effectiveness(e).String()
 	case lang.ChineseTaiwan:
-		return zhTW.Effectiveness(e).String()
-	default:
-		return ""
+		result = zhTW.Effectiveness(e).String()
 	}
+	result = strings.Replace(result, "_", " ", -1)
+	return result
 }
 
 const _Symbol_string = "×▲ ●"

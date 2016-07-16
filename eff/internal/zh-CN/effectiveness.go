@@ -4,10 +4,10 @@ package zhCN
 type Effectiveness int8
 
 const (
-	無効 Effectiveness = iota
-	今一つ
-	通常
-	抜群
+	无效 Effectiveness = iota
+	不佳
+	普通
+	超群
 )
 
 //go:generate stringer -type=Effectiveness

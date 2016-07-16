@@ -4,10 +4,10 @@ package fr
 type Effectiveness int8
 
 const (
-	無効 Effectiveness = iota
-	今一つ
-	通常
-	抜群
+	Aucun_Effet Effectiveness = iota
+	Pas_Très_Efficace
+	Normaux
+	Super_Efficace
 )
 
 //go:generate stringer -type=Effectiveness
