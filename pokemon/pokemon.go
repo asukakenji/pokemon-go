@@ -28,7 +28,7 @@ import (
 type Pokemon int16
 
 const (
-	_              Pokemon = iota
+	None           Pokemon = iota
 	Bulbasaur              // 001: フシギダネ
 	Ivysaur                // 002: フシギソウ
 	Venusaur               // 003: フシギバナ -> メガフシギバナ (Mega Venusaur)
@@ -188,11 +188,17 @@ func (p Pokemon) Id() int {
 	return int(p)
 }
 
-func (p Pokemon) self() *_pokemon {
-	return pokemons[p.Id()]
+func (p Pokemon) EvolveFrom() Pokemon {
+	return p.self().evolveFrom
 }
 
-// TODO: Write this!
+func (p Pokemon) EvolveTo() Iterable {
+	predicate := func(p2 Pokemon) bool {
+		return p2.EvolveFrom() == p
+	}
+	return All().Filter(predicate)
+}
+
 func (p Pokemon) LocalName(l lang.Language) string {
 	result := ""
 	switch l {
@@ -275,4 +281,8 @@ func (p Pokemon) Weaknesses() weak.Iterable {
 		return w.Multiplier > 1.0
 	}
 	return weak.Wrap(typ.All().Map(mapper)).Filter(predicate).Sort(weak.ByMultiplier(generic.Descending))
+}
+
+func (p Pokemon) self() *_pokemon {
+	return pokemons[p.Id()]
 }
