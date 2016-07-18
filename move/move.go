@@ -13,6 +13,7 @@ type Move interface {
 }
 
 type StandardMove int16
+type SpecialMove int16
 
 const (
 	_ StandardMove = iota
@@ -56,35 +57,7 @@ const (
 	WaterGun
 	WingAttack
 	ZenHeadbutt
-)
-
-//go:generate stringer -type=StandardMove
-
-func (m StandardMove) Id() int {
-	return int(m)
-}
-
-func (m StandardMove) Type() typ.Type {
-	return m.self()._type
-}
-
-func (m StandardMove) Damage() int {
-	return int(m.self().damage)
-}
-
-func (m StandardMove) EnergyRequired() int {
-	return 0
-}
-
-func (m StandardMove) self() *_standard_move {
-	return _standard_moves[m.Id()]
-}
-
-type SpecialMove int16
-
-const (
-	_ SpecialMove = iota
-	AerialAce
+	AerialAce SpecialMove = iota
 	AirCutter
 	AncientPower
 	AquaJet
@@ -169,7 +142,28 @@ const (
 	X_Scissor
 )
 
+//go:generate stringer -type=StandardMove
 //go:generate stringer -type=SpecialMove
+
+func (m StandardMove) Id() int {
+	return int(m)
+}
+
+func (m StandardMove) Type() typ.Type {
+	return m.self()._type
+}
+
+func (m StandardMove) Damage() int {
+	return int(m.self().damage)
+}
+
+func (m StandardMove) EnergyRequired() int {
+	return 0
+}
+
+func (m StandardMove) self() *_standard_move {
+	return moves[m.Id()].(*_standard_move)
+}
 
 func (m SpecialMove) Id() int {
 	return int(m)
@@ -188,5 +182,5 @@ func (m SpecialMove) EnergyRequired() int {
 }
 
 func (m SpecialMove) self() *_special_move {
-	return _special_moves[m.Id()]
+	return moves[m.Id()].(*_special_move)
 }

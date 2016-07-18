@@ -5,6 +5,7 @@ import (
 
 	"github.com/asukakenji/pokemon-go/generic"
 	"github.com/asukakenji/pokemon-go/lang"
+	"github.com/asukakenji/pokemon-go/move"
 
 	"github.com/asukakenji/pokemon-go/pokemon/internal/de"
 	"github.com/asukakenji/pokemon-go/pokemon/internal/en"
@@ -280,6 +281,24 @@ func (p Pokemon) Weaknesses() weak.Iterable {
 		return w.Multiplier > 1.0
 	}
 	return weak.Wrap(typ.All().Map(mapper)).Filter(predicate).Sort(weak.ByMultiplier(generic.Descending))
+}
+
+func (p Pokemon) Moves() move.Iterable {
+	return move.Slice(moves[p.Id()])
+}
+
+func (p Pokemon) StandardMoves() move.Iterable {
+	return p.Moves().Filter(func(m move.Move) bool {
+		_, ok := m.(move.StandardMove)
+		return ok
+	})
+}
+
+func (p Pokemon) SpecialMoves() move.Iterable {
+	return p.Moves().Filter(func(m move.Move) bool {
+		_, ok := m.(move.SpecialMove)
+		return ok
+	})
 }
 
 func (p Pokemon) self() *_pokemon {

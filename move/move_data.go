@@ -10,8 +10,16 @@ type _standard_move struct {
 	damage int16
 }
 
-var _standard_moves = [...]*_standard_move{
+type _special_move struct {
+	id             SpecialMove
+	_type          t.Type
+	damage         int16
+	energyRequired int8
+}
+
+var moves = [...]interface{}{
 	nil,
+	// Standard Move
 	&_standard_move{Acid, t.Poison, 10},
 	&_standard_move{Bite, t.Dark, 6},
 	&_standard_move{Bubble, t.Water, 15},
@@ -52,16 +60,7 @@ var _standard_moves = [...]*_standard_move{
 	&_standard_move{WaterGun, t.Water, 10},
 	&_standard_move{WingAttack, t.Flying, 12},
 	&_standard_move{ZenHeadbutt, t.Psychic, 15},
-}
-
-type _special_move struct {
-	id             SpecialMove
-	_type          t.Type
-	damage         int16
-	energyRequired int8
-}
-
-var _special_moves = [...]*_special_move{
+	// Special Move
 	&_special_move{AerialAce, t.Flying, 25, 4},
 	&_special_move{AirCutter, t.Flying, 25, 4},
 	&_special_move{AncientPower, t.Rock, 30, 4},
