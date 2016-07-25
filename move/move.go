@@ -1,11 +1,14 @@
 package move
 
 import (
+	"fmt"
+
 	typ "github.com/asukakenji/pokemon-go/type"
 )
 
 // Move
 type Move interface {
+	fmt.Stringer
 	Id() int
 	Type() typ.Type
 	Damage() int
@@ -23,6 +26,7 @@ const (
 	BugBite
 	BulletPunch
 	Confusion
+	Cut
 	DragonBreath
 	Ember
 	FeintAttack

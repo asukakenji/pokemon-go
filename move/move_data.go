@@ -26,6 +26,7 @@ var moves = [...]interface{}{
 	&_standard_move{BugBite, t.Bug, 6},
 	&_standard_move{BulletPunch, t.Steel, 10},
 	&_standard_move{Confusion, t.Psychic, 12},
+	&_standard_move{Cut, t.Normal, 12},
 	&_standard_move{DragonBreath, t.Dragon, 6},
 	&_standard_move{Ember, t.Fire, 10},
 	&_standard_move{FeintAttack, t.Dark, 12},

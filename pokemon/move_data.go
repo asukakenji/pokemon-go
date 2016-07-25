@@ -88,7 +88,7 @@ var moves = [][]m.Move{
 	{m.WaterGun, m.Confusion, m.Psychic, m.WaterPulse, m.IceBeam},                       // 080: Slowbro (ヤドラン)
 	{m.Spark, m.ThunderShock, m.MagnetBomb, m.Discharge, m.Thunderbolt},                 // 081: Magnemite (コイル)
 	{m.Spark, m.ThunderShock, m.MagnetBomb, m.Discharge, m.FlashCannon},                 // 082: Magneton (レアコイル)
-	{m.FuryCutter, m.AirCutter},                                                         // 083: Farfetch'd (カモネギ)
+	{m.Cut, m.AerialAce, m.AirCutter},                                                   // 083: Farfetch'd (カモネギ)
 	{m.Peck, m.QuickAttack, m.Swift, m.AerialAce, m.DrillPeck},                          // 084: Doduo (ドードー)
 	{m.SteelWing, m.FeintAttack, m.DrillPeck, m.AerialAce, m.AirCutter},                 // 085: Dodrio (ドードリオ)
 	{m.WaterGun, m.IceShard, m.AquaJet, m.IcyWind, m.AquaTail},                          // 086: Seel (パウワウ)

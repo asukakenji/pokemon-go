@@ -4,9 +4,9 @@ package move
 
 import "fmt"
 
-const _StandardMove_name = "AcidBiteBubbleBugBiteBulletPunchConfusionDragonBreathEmberFeintAttackFireFangFrostBreathFuryCutterIceShardKarateChopLickLowKickMetalClawMudShotMudSlapPeckPoisonJabPoisonStingPoundPsychoCutQuickAttackRazorLeafRockSmashRockThrowScratchShadowClawSparkSplashSteelWingSuckerPunchTackleThunderShockVineWhipWaterGunWingAttackZenHeadbutt"
+const _StandardMove_name = "AcidBiteBubbleBugBiteBulletPunchConfusionCutDragonBreathEmberFeintAttackFireFangFrostBreathFuryCutterIceShardKarateChopLickLowKickMetalClawMudShotMudSlapPeckPoisonJabPoisonStingPoundPsychoCutQuickAttackRazorLeafRockSmashRockThrowScratchShadowClawSparkSplashSteelWingSuckerPunchTackleThunderShockVineWhipWaterGunWingAttackZenHeadbutt"
 
-var _StandardMove_index = [...]uint16{0, 4, 8, 14, 21, 32, 41, 53, 58, 69, 77, 88, 98, 106, 116, 120, 127, 136, 143, 150, 154, 163, 174, 179, 188, 199, 208, 217, 226, 233, 243, 248, 254, 263, 274, 280, 292, 300, 308, 318, 329}
+var _StandardMove_index = [...]uint16{0, 4, 8, 14, 21, 32, 41, 44, 56, 61, 72, 80, 91, 101, 109, 119, 123, 130, 139, 146, 153, 157, 166, 177, 182, 191, 202, 211, 220, 229, 236, 246, 251, 257, 266, 277, 283, 295, 303, 311, 321, 332}
 
 func (i StandardMove) String() string {
 	i -= 1
