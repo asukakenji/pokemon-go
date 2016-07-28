@@ -1,6 +1,7 @@
 package pokemon
 
 import (
+	"math"
 	"strings"
 
 	"github.com/asukakenji/pokemon-go/generic"
@@ -184,6 +185,12 @@ const (
 
 //go:generate stringer -type=Pokemon
 
+type IndividualValues struct {
+	Stamina int // 0 <= x <= 15
+	Attack  int // 0 <= x <= 15
+	Defense int // 0 <= x <= 15
+}
+
 func (p Pokemon) Id() int {
 	return int(p)
 }
@@ -248,6 +255,32 @@ func (p Pokemon) BaseDefense() int {
 	return int(p.self().baseDefense)
 }
 
+func (p Pokemon) CombatPower(iv IndividualValues, level float32) int {
+	if level < 1.0 || level > 40.0 {
+		panic("Invalid level")
+	}
+	stamina := float64(p.BaseStamina() + iv.Stamina)
+	attack := float64(p.BaseAttack() + iv.Attack)
+	defense := float64(p.BaseDefense() + iv.Defense)
+	multiplier := levelTable[int(level*2)].combatPowerMultiplier
+	if result := int(math.Sqrt(stamina) * attack * math.Sqrt(defense) * multiplier * multiplier / 10.0); result > 10 {
+		return result
+	}
+	return 10
+}
+
+func (p Pokemon) HitPoints(iv IndividualValues, level float32) int {
+	if level < 1.0 || level > 40.0 {
+		panic("Invalid level")
+	}
+	stamina := float64(p.BaseStamina() + iv.Stamina)
+	multiplier := levelTable[int(level*2)].combatPowerMultiplier
+	if result := int(stamina * multiplier); result > 10 {
+		return result
+	}
+	return 10
+}
+
 func (p Pokemon) Type1() typ.Type {
 	return p.self().type1
 }
@@ -262,6 +295,14 @@ func (p Pokemon) Weight() float64 {
 
 func (p Pokemon) Height() float64 {
 	return p.self().height
+}
+
+func (p Pokemon) StardustAndCandyToPowerUp(level float32) (int, Pokemon, int) {
+	if level < 1.0 || level > 40.0 {
+		panic("Invalid level")
+	}
+	index := int(level * 2)
+	return int(levelTable[index].stardustToPowerUp), p.self().candyType, int(levelTable[index].candyToPowerUp)
 }
 
 func (p Pokemon) CandyToEvolve() (Pokemon, int) {
