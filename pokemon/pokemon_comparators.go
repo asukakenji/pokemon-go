@@ -19,35 +19,51 @@ func ById(ordering generic.Ordering) func(Pokemon, Pokemon) bool {
 	}
 }
 
-// ByBaseCombatPower is designed to be used with Iterable.Sort.
+// ByBaseStamina is designed to be used with Iterable.Sort.
 // It returns a function that is usable as a parameter for Sort.
 // When ordering is Ascending,
-// the returned function returns true if p1 if p1 is less than p2 by base combat
-// power (base CP).
-func ByBaseCombatPower(ordering generic.Ordering) func(Pokemon, Pokemon) bool {
+// the returned function returns true if p1 if p1 is less than p2
+// by base stamina.
+func ByBaseStamina(ordering generic.Ordering) func(Pokemon, Pokemon) bool {
 	if ordering == generic.Ascending {
 		return func(p1, p2 Pokemon) bool {
-			return p1.BaseCombatPower() < p2.BaseCombatPower()
+			return p1.BaseStamina() < p2.BaseStamina()
 		}
 	}
 	return func(p1, p2 Pokemon) bool {
-		return p1.BaseCombatPower() < p2.BaseCombatPower()
+		return p1.BaseStamina() < p2.BaseStamina()
 	}
 }
 
-// ByBaseHitPoints is designed to be used with Iterable.Sort.
+// ByBaseAttack is designed to be used with Iterable.Sort.
 // It returns a function that is usable as a parameter for Sort.
 // When ordering is Ascending,
-// the returned function returns true if p1 if p1 is less than p2 by base hit
-// points (base HP).
-func ByBaseHitPoints(ordering generic.Ordering) func(Pokemon, Pokemon) bool {
+// the returned function returns true if p1 if p1 is less than p2
+// by base attack.
+func ByBaseAttack(ordering generic.Ordering) func(Pokemon, Pokemon) bool {
 	if ordering == generic.Ascending {
 		return func(p1, p2 Pokemon) bool {
-			return p1.BaseHitPoints() < p2.BaseHitPoints()
+			return p1.BaseAttack() < p2.BaseAttack()
 		}
 	}
 	return func(p1, p2 Pokemon) bool {
-		return p1.BaseHitPoints() < p2.BaseHitPoints()
+		return p1.BaseAttack() < p2.BaseAttack()
+	}
+}
+
+// ByBaseDefense is designed to be used with Iterable.Sort.
+// It returns a function that is usable as a parameter for Sort.
+// When ordering is Ascending,
+// the returned function returns true if p1 if p1 is less than p2
+// by base defense.
+func ByBaseDefense(ordering generic.Ordering) func(Pokemon, Pokemon) bool {
+	if ordering == generic.Ascending {
+		return func(p1, p2 Pokemon) bool {
+			return p1.BaseDefense() < p2.BaseDefense()
+		}
+	}
+	return func(p1, p2 Pokemon) bool {
+		return p1.BaseDefense() < p2.BaseDefense()
 	}
 }
 

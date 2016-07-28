@@ -236,12 +236,16 @@ func (p Pokemon) LocalName(l lang.Language) string {
 	return result
 }
 
-func (p Pokemon) BaseCombatPower() int {
-	return int(p.self().baseCombatPower)
+func (p Pokemon) BaseStamina() int {
+	return int(p.self().baseStamina)
 }
 
-func (p Pokemon) BaseHitPoints() int {
-	return int(p.self().baseHitPoints)
+func (p Pokemon) BaseAttack() int {
+	return int(p.self().baseAttack)
+}
+
+func (p Pokemon) BaseDefense() int {
+	return int(p.self().baseDefense)
 }
 
 func (p Pokemon) Type1() typ.Type {
@@ -258,10 +262,6 @@ func (p Pokemon) Weight() float64 {
 
 func (p Pokemon) Height() float64 {
 	return p.self().height
-}
-
-func (p Pokemon) CandyToPowerUp() (Pokemon, int) {
-	return p.self().candyType, int(p.self().candyToPowerUp)
 }
 
 func (p Pokemon) CandyToEvolve() (Pokemon, int) {
