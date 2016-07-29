@@ -1,4 +1,4 @@
-# Pokémon GO
+# Pokémon GO Tools and Library in Go (Golang)
 
 [Pokémon GO][pokemon-go] is a free-to-play location-based, augmented reality game developed and published by [Niantic][niantic] for [iOS][ios] and [Android][android] devices. It was initially released in selected countries in July 2016. In the game, players use the smart device's GPS and camera to capture, battle, and train virtual creatures, called Pokémon, who appear on the screen as if they were in the same real-world location as the player.
 
