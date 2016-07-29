@@ -11,14 +11,13 @@ import (
 	"github.com/asukakenji/pokemon-go/pokemon"
 )
 
-var p = pokemon.None
-
 type spec struct {
 	pokemon.IndividualValues
 	level float32
 }
 
 func main() {
+	p := pokemon.None
 	reader := bufio.NewReader(os.Stdin)
 	for {
 		pokemonString := ""

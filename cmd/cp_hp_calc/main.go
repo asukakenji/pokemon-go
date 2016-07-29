@@ -11,9 +11,8 @@ import (
 	"github.com/asukakenji/pokemon-go/pokemon"
 )
 
-var p = pokemon.None
-
 func main() {
+	p := pokemon.None
 	reader := bufio.NewReader(os.Stdin)
 	for {
 		pokemonString := ""
