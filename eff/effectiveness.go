@@ -33,18 +33,40 @@ const (
 
 //go:generate stringer -type=Effectiveness
 
+func PackageName(l lang.Language) string {
+	switch l {
+	case lang.Japanese:
+		return "効果"
+	case lang.English:
+		return "Effectiveness"
+	case lang.French:
+		return "Efficacité"
+	case lang.German:
+		return "Effektivität"
+	case lang.Italian:
+		return "Efficacia"
+	case lang.Korean:
+		return "효과"
+	case lang.Spanish:
+		return "Eficacia"
+	case lang.ChineseSimplified:
+		return "效果"
+	case lang.ChineseTraditional:
+		return "效果"
+	case lang.ChineseChina:
+		return "效果"
+	case lang.ChineseHongKong:
+		return "效果"
+	case lang.ChineseTaiwan:
+		return "效果"
+	default:
+		return ""
+	}
+}
+
 func (e Effectiveness) Id() int {
 	return int(e)
 }
-
-// ja: 効果
-// en: Effectiveness
-// fr:
-// de:
-// it:
-// ko: 효과
-// es:
-// zh: 效果
 
 func (e Effectiveness) LocalName(l lang.Language) string {
 	result := ""

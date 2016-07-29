@@ -47,19 +47,40 @@ const (
 
 //go:generate stringer -type=Type
 
+func PackageName(l lang.Language) string {
+	switch l {
+	case lang.Japanese:
+		return "タイプ"
+	case lang.English:
+		return "Type"
+	case lang.French:
+		return "Type"
+	case lang.German:
+		return "Typ"
+	case lang.Italian:
+		return "Tipo"
+	case lang.Korean:
+		return "타입"
+	case lang.Spanish:
+		return "Tipo"
+	case lang.ChineseSimplified:
+		return "属性"
+	case lang.ChineseTraditional:
+		return "屬性"
+	case lang.ChineseChina:
+		return "属性"
+	case lang.ChineseHongKong:
+		return "屬性"
+	case lang.ChineseTaiwan:
+		return "屬性"
+	default:
+		return ""
+	}
+}
+
 func (t Type) Id() int {
 	return int(t)
 }
-
-// ja: タイプ
-// en: Type
-// fr: Type
-// de: Typ
-// it: Tipo
-// es: Tipo
-// zh-CN: 系
-// zh-HK: 系
-// zh-TW: 系
 
 func (t Type) LocalName(l lang.Language) string {
 	result := ""

@@ -185,6 +185,37 @@ const (
 
 //go:generate stringer -type=Pokemon
 
+func PackageName(l lang.Language) string {
+	switch l {
+	case lang.Japanese:
+		return "ポケモン"
+	case lang.English:
+		return "Pokémon"
+	case lang.French:
+		return "Pokémon"
+	case lang.German:
+		return "Pokémon"
+	case lang.Italian:
+		return "Pokémon"
+	case lang.Korean:
+		return "포켓몬"
+	case lang.Spanish:
+		return "Pokémon"
+	case lang.ChineseSimplified:
+		return "精灵宝可梦"
+	case lang.ChineseTraditional:
+		return "精靈寶可夢"
+	case lang.ChineseChina:
+		return "神奇宝贝"
+	case lang.ChineseHongKong:
+		return "寵物小精靈"
+	case lang.ChineseTaiwan:
+		return "神奇寶貝"
+	default:
+		return ""
+	}
+}
+
 type IndividualValues struct {
 	Stamina int // 0 <= x <= 15
 	Attack  int // 0 <= x <= 15

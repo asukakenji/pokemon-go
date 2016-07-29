@@ -1,6 +1,7 @@
 package weak
 
 import (
+	"github.com/asukakenji/pokemon-go/lang"
 	typ "github.com/asukakenji/pokemon-go/type"
 )
 
@@ -9,12 +10,33 @@ type Weakness struct {
 	Multiplier float64  // Multiplier
 }
 
-// ja: 弱点
-// en: Weakness(es)
-// fr: Faiblesse(s)
-// de: Schwäche(n)
-// it: Debolezza (Debolezze)
-// es: Debilidad
-// zh-CN: 弱点
-// zh-HK: 弱點
-// zh-TW: 弱點
+func PackageName(l lang.Language) string {
+	switch l {
+	case lang.Japanese:
+		return "弱点"
+	case lang.English:
+		return "Weakness(es)"
+	case lang.French:
+		return "Faiblesse(s)"
+	case lang.German:
+		return "Schwäche(n)"
+	case lang.Italian:
+		return "Debolezz(a/e)"
+	case lang.Korean:
+		return "약점"
+	case lang.Spanish:
+		return "Debilidad"
+	case lang.ChineseSimplified:
+		return "弱点"
+	case lang.ChineseTraditional:
+		return "弱點"
+	case lang.ChineseChina:
+		return "弱点"
+	case lang.ChineseHongKong:
+		return "弱點"
+	case lang.ChineseTaiwan:
+		return "弱點"
+	default:
+		return ""
+	}
+}
