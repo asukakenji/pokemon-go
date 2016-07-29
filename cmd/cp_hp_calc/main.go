@@ -27,10 +27,10 @@ func main() {
 			if line, err := reader.ReadString('\n'); err != nil {
 				panic(err)
 			} else {
-				pokemonString = strings.TrimSuffix(line, "\n")
+				pokemonString = strings.TrimSuffix(strings.TrimSuffix(line, "\n"), "\r")
 			}
 		}
-		if pokemonString != "\n" {
+		if pokemonString != "" {
 			if i, err := strconv.Atoi(pokemonString); err != nil {
 				p = pokemon.ByCodeName(pokemonString)
 			} else {
