@@ -191,6 +191,16 @@ type IndividualValues struct {
 	Defense int // 0 <= x <= 15
 }
 
+func ByCodeName(codeName string) Pokemon {
+	result := None
+	All().ForEach(func(p Pokemon) {
+		if p.String() == codeName {
+			result = p
+		}
+	})
+	return result
+}
+
 func (p Pokemon) Id() int {
 	return int(p)
 }
@@ -263,7 +273,7 @@ func (p Pokemon) CombatPower(iv IndividualValues, level float32) int {
 	attack := float64(p.BaseAttack() + iv.Attack)
 	defense := float64(p.BaseDefense() + iv.Defense)
 	multiplier := levelTable[int(level*2)].combatPowerMultiplier
-	if result := int(math.Sqrt(stamina) * attack * math.Sqrt(defense) * multiplier * multiplier / 10.0); result > 10 {
+	if result := int(attack * math.Sqrt(defense * stamina) * multiplier * multiplier / 10.0); result > 10 {
 		return result
 	}
 	return 10
