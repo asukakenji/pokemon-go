@@ -1,5 +1,8 @@
+# Types in Pokémon GO
+
 | 日 | Eng | Fra | Deu | Ita | 한 | Spa | 简(官) | 繁(官) | 简(中) | 繁(港) | 繁(台) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| タイプ | Type | Type | Typ | Tipo | 타입 | Tipo | 属性 | 屬性 | 属性 | 屬性 | 屬性 |
 | ノーマル | Normal | Normal | Normal | Normale | 노말 | Normal | 一般 | 一般 | 一般 | 普通 | 一般 |
 | ほのお | Fire | Feu | Feuer | Fuoco | 불꽃 | Fuego | 炎 | 炎 | 炎 | 火 | 炎 |
 | みず | Water | Eau | Wasser | Acqua | 물 | Agua | 水 | 水 | 水 | 水 | 水 |
