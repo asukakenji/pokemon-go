@@ -6,6 +6,7 @@ import (
 
 	"github.com/asukakenji/pokemon-go/generic"
 	"github.com/asukakenji/pokemon-go/lang"
+	"github.com/asukakenji/pokemon-go/lv"
 	"github.com/asukakenji/pokemon-go/move"
 
 	"github.com/asukakenji/pokemon-go/pokemon/internal/de"
@@ -296,26 +297,26 @@ func (p Pokemon) BaseDefense() int {
 	return int(p.self().baseDefense)
 }
 
-func (p Pokemon) CombatPower(iv IndividualValues, level float32) int {
-	if level < 1.0 || level > 40.0 {
+func (p Pokemon) CombatPower(iv IndividualValues, level lv.Level) int {
+	if !level.IsValid() {
 		panic("Invalid level")
 	}
 	stamina := float64(p.BaseStamina() + iv.Stamina)
 	attack := float64(p.BaseAttack() + iv.Attack)
 	defense := float64(p.BaseDefense() + iv.Defense)
-	multiplier := getLevelItem(level).combatPowerMultiplier
+	multiplier := level.CombatPowerMultiplier()
 	if result := int(attack * math.Sqrt(defense*stamina) * multiplier * multiplier / 10.0); result > 10 {
 		return result
 	}
 	return 10
 }
 
-func (p Pokemon) HitPoints(iv IndividualValues, level float32) int {
-	if level < 1.0 || level > 40.0 {
+func (p Pokemon) HitPoints(iv IndividualValues, level lv.Level) int {
+	if !level.IsValid() {
 		panic("Invalid level")
 	}
 	stamina := float64(p.BaseStamina() + iv.Stamina)
-	multiplier := getLevelItem(level).combatPowerMultiplier
+	multiplier := level.CombatPowerMultiplier()
 	if result := int(stamina * multiplier); result > 10 {
 		return result
 	}
@@ -338,12 +339,11 @@ func (p Pokemon) Height() float64 {
 	return p.self().height
 }
 
-func (p Pokemon) StardustAndCandyToPowerUp(level float32) (int, Pokemon, int) {
-	if level < 1.0 || level > 40.0 {
+func (p Pokemon) StardustAndCandyToPowerUp(level lv.Level) (int, Pokemon, int) {
+	if !level.IsValid() {
 		panic("Invalid level")
 	}
-	levelItem0 := getLevelItem(level)
-	return int(levelItem0.stardustToPowerUp), p.self().candyType, int(levelItem0.candyToPowerUp)
+	return level.StardustToPowerUp(), p.self().candyType, level.CandyToPowerUp()
 }
 
 func (p Pokemon) CandyToEvolve() (Pokemon, int) {
@@ -385,28 +385,4 @@ func (p Pokemon) SpecialMoves() move.Iterable {
 
 func (p Pokemon) self() *_pokemon {
 	return pokemons[p.Id()]
-}
-
-func getLevelItem(level float32) levelItem {
-	return levelTable[int((level-1.0)*2)]
-}
-
-func LevelsByStardust(stardust int) []float32 {
-	result := make([]float32, 0)
-	for _, li := range levelTable {
-		if int(li.stardustToPowerUp) == stardust {
-			result = append(result, li.level)
-		}
-	}
-	return result
-}
-
-func LevelsByStardustAndCandy(stardust, candy int) []float32 {
-	result := make([]float32, 0)
-	for _, li := range levelTable {
-		if int(li.stardustToPowerUp) == stardust && int(li.candyToPowerUp) == candy {
-			result = append(result, li.level)
-		}
-	}
-	return result
 }

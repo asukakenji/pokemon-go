@@ -8,12 +8,13 @@ import (
 	"strings"
 
 	"github.com/asukakenji/pokemon-go/lang"
+	"github.com/asukakenji/pokemon-go/lv"
 	"github.com/asukakenji/pokemon-go/pokemon"
 )
 
 type spec struct {
 	pokemon.IndividualValues
-	level float32
+	level lv.Level
 }
 
 func main() {
@@ -73,7 +74,7 @@ func main() {
 
 		specs := make([]spec, 0)
 		ivs := allIVs()
-		levels := pokemon.LevelsByStardustAndCandy(stardust, candy)
+		levels := lv.LevelsByStardustAndCandy(stardust, candy)
 		for _, iv := range ivs {
 			for _, level := range levels {
 				if p.CombatPower(iv, level) == combatPower && p.HitPoints(iv, level) == hitPoints {
@@ -93,7 +94,7 @@ func printSpecs(specs []spec) {
 	fmt.Printf("%s\t%s\t%s\t%s\t%s\n", "Level", "Attack", "Defense", "Stamina", "Perfection")
 	fmt.Printf("%s\t%s\t%s\t%s\t%s\n", "-----", "------", "-------", "-------", "----------")
 	for _, spec := range specs {
-		perfection := float64(spec.Attack + spec.Defense + spec.Stamina) * 100.0 / 45.0
+		perfection := float64(spec.Attack+spec.Defense+spec.Stamina) * 100.0 / 45.0
 		perfectionSum += perfection
 		if perfection < perfectionMin {
 			perfectionMin = perfection
@@ -105,12 +106,12 @@ func printSpecs(specs []spec) {
 	}
 	fmt.Printf("%s\t%s\t%s\t%s\t%s\n", "-----", "------", "-------", "-------", "----------")
 	fmt.Printf("Number of results: %d\n", count)
-	fmt.Printf("Perfection (Min, Avg, Max): %f%%, %f%%, %f%%\n", perfectionMin, perfectionSum / float64(count), perfectionMax)
+	fmt.Printf("Perfection (Min, Avg, Max): %f%%, %f%%, %f%%\n", perfectionMin, perfectionSum/float64(count), perfectionMax)
 }
 
-func allLevels() []float32 {
-	result := make([]float32, (40-1)*2)
-	for level := float32(1.0); level <= 40.0; level += 0.5 {
+func allLevels() []lv.Level {
+	result := make([]lv.Level, (40-1)*2)
+	for level := lv.Level(float32(1.0)); level <= 40.0; level += 0.5 {
 		result = append(result, level)
 	}
 	return result
