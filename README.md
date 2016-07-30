@@ -50,6 +50,8 @@ This project aims primarily at providing the data tables used in the game, an AP
   - This package deals with "Move" in the game.
 - Package `weak`
   - This package deals with "Weakness" in the game.
+- Package `lv`
+  - This package deals with "Level" in the game.
 - Package `type` (actually `_type`, since `type` is a keyword in Go (Golang))
   - This package deals with "Type" in the game.
 - Package `eff`
