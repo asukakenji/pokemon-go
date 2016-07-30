@@ -2,7 +2,7 @@
 
 [Pokémon GO][pokemon-go] is a free-to-play location-based, augmented reality game developed and published by [Niantic][niantic] for [iOS][ios] and [Android][android] devices. It was initially released in selected countries in July 2016. In the game, players use the smart device's GPS and camera to capture, battle, and train virtual creatures, called Pokémon, who appear on the screen as if they were in the same real-world location as the player.
 
-This project aims primarily at providing the value tables used in the game, an API the retrieve them, and also tools to assist playing the game.
+This project aims primarily at providing the data tables used in the game, an API the retrieve them, and tools to assist playing the game.
 
 ## Online Resources
 - A list of Pokémons in different languages (available [here][pokemon])
@@ -13,17 +13,13 @@ This project aims primarily at providing the value tables used in the game, an A
 - A table of Pokémon moves and their information (coming soon)
 
 ## Executables
-- CP / HP Calculator:
-  - Given the "IVs (Individual Values)" and "Level" of a Pokémon, calculate its "CP (Combat Power)" and "HP (Hit Points). This is basically used to test the "IV Calculator"
-  - The source code is available [here][cp_hp_calc].
-  - Binaries (coming soon):
-    - Windows (32-bit / x86)
-    - Windows (64-bit / x64)
-    - Mac (64-bit / x64)
-    - Linux (32-bit / x86)
-    - Linux (64-bit / x64)
-- IV Calculator:
-  - Given the "CP (Combat Power)", "HP (Hit Points)", "Stardust to Power Up", and "Candy to Power Up" of a Pokémon, calculate its possible "IVs (Individual Values)" and "Level" combinations. This is probably the most wanted feature.
+- IV Calculator Pro (development in progress):
+  - Like "IV Calculator".
+  - Also deals with "Power Up" and "Evolve".
+  - Stores Pokémons in a database for follow ups.
+- **IV Calculator**:
+  - Given the "CP (Combat Power)", "HP (Hit Points)", "Stardust to Power Up", and "Candy to Power Up" of a Pokémon, calculate its possible "IVs (Individual Values)" and "Level" combinations.
+  - This is probably the most wanted feature.
   - The source code is available [here][iv_calc].
   - Binaries (coming soon):
     - Windows (32-bit / x86)
@@ -31,6 +27,21 @@ This project aims primarily at providing the value tables used in the game, an A
     - Mac (64-bit / x64)
     - Linux (32-bit / x86)
     - Linux (64-bit / x64)
+- CP / HP Calculator:
+  - Given the "IVs (Individual Values)" and "Level" of a Pokémon, calculate its "CP (Combat Power)" and "HP (Hit Points).
+  - This is basically used to test the "IV Calculator" and compare implementations written by other developers.
+  - The source code is available [here][cp_hp_calc].
+  - Binaries (coming soon):
+    - Windows (32-bit / x86)
+    - Windows (64-bit / x64)
+    - Mac (64-bit / x64)
+    - Linux (32-bit / x86)
+    - Linux (64-bit / x64)
+- Cheatsheet Generator (coming soon):
+  - Generate data tables.
+  - Supported output formats:
+    - Markdown (`*.md`)
+    - HTML (`*.html`)
 
 ## APIs
 - Package `pokemon`
