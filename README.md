@@ -43,25 +43,42 @@ This project aims primarily at providing the data tables used in the game, an AP
     - Markdown (`*.md`)
     - HTML (`*.html`)
 
-## APIs
-- Package `pokemon`
+## Libraries / APIs
+- [Package `pokemon`](pokemon/)
   - This package deals with "Pokémon" in the game.
-- Package `move`
+- [Package `move`](move/)
   - This package deals with "Move" in the game.
-- Package `weak`
+- [Package `weak`](weak/)
   - This package deals with "Weakness" in the game.
-- Package `lv`
+- [Package `lv`](lv/)
   - This package deals with "Level" in the game.
-- Package `type` (actually `_type`, since `type` is a keyword in Go (Golang))
+- [Package `type`](type/) (actually `_type`, since `type` is a keyword in Go (Golang))
   - This package deals with "Type" in the game.
-- Package `eff`
+- [Package `eff`](eff/)
   - This package deals with "Effectiveness" in the game.
-- Package `lang`
+- [Package `lang`](lang/)
   - This package deals with multi-lingual issues. Local names and translations are available. The following languages and currently supported: Japanese (日本語), English, French (Français), German (Deutsch), Italian (Italiano), Korean (한국어), Spanish (Español), Simplified Chinese (简体中文（官方译名）), Traditional Chinese (繁體中文（官方譯名）), PRC Chinese (简体中文（中国译名）), Hong Kong Chinese (繁體中文（香港譯名）), Taiwan Chinese (繁體中文（台灣譯名）).
   - For instance, the Pokémon with ID #001 is named: [フシギダネ (日本語)](pokemon/internal/ja/pokemon.go#L8), [Bulbasaur (English)](pokemon/internal/en/pokemon.go#L8), [Bulbizarre (Français)](pokemon/internal/fr/pokemon.go#L8), [Bisasam (Deutsch)](pokemon/internal/de/pokemon.go#L8), [Bulbasaur (Italiano)](pokemon/internal/it/pokemon.go#L8), [이상해씨 (한국어)](pokemon/internal/ko/pokemon.go#L8), [Bulbasaur (Español)](pokemon/internal/es/pokemon.go#L8), [妙蛙种子 (简体中文（官方译名）)](pokemon/internal/zh-CHS/pokemon.go#L8), [妙蛙種子 (繁體中文（官方譯名）)](pokemon/internal/zh-CHT/pokemon.go#L8), [妙蛙种子 (简体中文（中国译名）)](pokemon/internal/zh-CN/pokemon.go#L8), [奇異種子 (繁體中文（香港譯名）)](pokemon/internal/zh-HK/pokemon.go#L8), [妙蛙種子 (繁體中文（台灣譯名）)](pokemon/internal/zh-TW/pokemon.go#L8).
   - For instance, the Pokémon with ID #100 is named: [ビリリダマ (日本語)](pokemon/internal/ja/pokemon.go#L107), [Voltorb (English)](pokemon/internal/en/pokemon.go#L107), [Voltorbe (Français)](pokemon/internal/fr/pokemon.go#L107), [Voltobal (Deutsch)](pokemon/internal/de/pokemon.go#L107), [Voltorb (Italiano)](pokemon/internal/it/pokemon.go#L107), [찌리리공 (한국어)](pokemon/internal/ko/pokemon.go#L107), [Voltorb (Español)](pokemon/internal/es/pokemon.go#L107), [霹雳电球 (简体中文（官方译名）)](pokemon/internal/zh-CHS/pokemon.go#L107), [霹靂電球 (繁體中文（官方譯名）)](pokemon/internal/zh-CHT/pokemon.go#L107), [雷电球 (简体中文（中国译名）)](pokemon/internal/zh-CN/pokemon.go#L107), [霹靂蛋 (繁體中文（香港譯名）)](pokemon/internal/zh-HK/pokemon.go#L107), [雷電球 (繁體中文（台灣譯名）)](pokemon/internal/zh-TW/pokemon.go#L107).
-- Package `generic`
+- [Package `generic`](generic/)
   - This package deals with generic collections and common definitions in the project.
+
+## TODOs (Executables)
+- [ ] Fix calculations for non-integer levels
+- [ ] Usability: Don't panic, ask again for invalid input
+- [ ] Usability: Skip "Candy to Power Up" when unique
+- [ ] Usabliity: Non-interactive mode
+- [ ] Develop "IV Calculator Pro"
+- [ ] Consider switching to [`termbox-go`](https://github.com/nsf/termbox-go)
+
+## TODOs (Library)
+- [ ] Fix `CombatPower()` and `HitPoints()` in the `pokemon` package (should return a range)
+- [ ] Add methods to support CP / HP matching
+- [ ] Add multi-lingual definitions to the `move` package
+- [ ] Implement `lv_slice.go` as in other packages
+- [ ] Modify `iv_calc` to use the new API after the item above is completed
+- [ ] Consider separating `IndividualValues` into a package
+- [ ] Consider replacing `*_slice.go` implementations by my `go/stream` library after it is completed
 
 [pokemon-go]: http://www.pokemongo.com/
 [ios]: https://itunes.apple.com/app/pokemon-go/id1094591345
