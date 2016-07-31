@@ -301,26 +301,51 @@ func (p Pokemon) CombatPower(iv IndividualValues, level lv.Level) int {
 	if !level.IsValid() {
 		panic("Invalid level")
 	}
-	stamina := float64(p.BaseStamina() + iv.Stamina)
-	attack := float64(p.BaseAttack() + iv.Attack)
-	defense := float64(p.BaseDefense() + iv.Defense)
-	multiplier := level.CombatPowerMultiplier()
-	if result := int(attack * math.Sqrt(defense*stamina) * multiplier * multiplier / 10.0); result > 10 {
-		return result
+	if !level.IsInteger() {
+		panic("Level is not integer")
 	}
-	return 10
+	cp, _ := p.rawCombatPowerAndHitPointsForIntegerLevel(iv, level)
+	return atLeast10(int(cp))
 }
 
 func (p Pokemon) HitPoints(iv IndividualValues, level lv.Level) int {
 	if !level.IsValid() {
 		panic("Invalid level")
 	}
-	stamina := float64(p.BaseStamina() + iv.Stamina)
-	multiplier := level.CombatPowerMultiplier()
-	if result := int(stamina * multiplier); result > 10 {
-		return result
+	if !level.IsInteger() {
+		panic("Level is not integer")
 	}
-	return 10
+	_, hp := p.rawCombatPowerAndHitPointsForIntegerLevel(iv, level)
+	return atLeast10(int(hp))
+}
+
+func (p Pokemon) RawCombatPowerAndHitPoints(iv IndividualValues, level lv.Level) (cpMin, cpMax, hpMin, hpMax float64) {
+	if !level.IsValid() {
+		panic("Invalid level")
+	}
+	if level.IsInteger() {
+		cpMin, hpMin = p.rawCombatPowerAndHitPointsForIntegerLevel(iv, level)
+		cpMax, hpMax = cpMin, hpMin
+	} else {
+		cpMin, hpMin = p.rawCombatPowerAndHitPointsForIntegerLevel(iv, (level - 0.5))
+		cpMax, hpMax = p.rawCombatPowerAndHitPointsForIntegerLevel(iv, (level + 0.5))
+	}
+	return
+}
+
+func (p Pokemon) CombatPowerAndHitPoints(iv IndividualValues, level lv.Level) (cpMin, cpMax, hpMin, hpMax int) {
+	rawCpMin, rawCpMax, rawHpMin, rawHpMax := p.RawCombatPowerAndHitPoints(iv, level)
+	return atLeast10(int(rawCpMin)), atLeast10(int(rawCpMax)), atLeast10(int(rawHpMin)), atLeast10(int(rawHpMax))
+}
+
+func (p Pokemon) rawCombatPowerAndHitPointsForIntegerLevel(iv IndividualValues, level lv.Level) (cp, hp float64) {
+	stamina := float64(p.BaseStamina() + iv.Stamina)
+	attack := float64(p.BaseAttack() + iv.Attack)
+	defense := float64(p.BaseDefense() + iv.Defense)
+	multiplier := level.CombatPowerMultiplier()
+	cp = attack * math.Sqrt(defense*stamina) * multiplier * multiplier / 10.0
+	hp = stamina * multiplier
+	return
 }
 
 func (p Pokemon) Type1() typ.Type {
@@ -385,4 +410,11 @@ func (p Pokemon) SpecialMoves() move.Iterable {
 
 func (p Pokemon) self() *_pokemon {
 	return pokemons[p.Id()]
+}
+
+func atLeast10(x int) int {
+	if x > 10 {
+		return x
+	}
+	return 10
 }
