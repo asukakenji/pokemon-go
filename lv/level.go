@@ -1,6 +1,7 @@
 package lv
 
 import (
+	"fmt"
 	"math"
 )
 
@@ -9,6 +10,10 @@ type Level float32
 
 func (l Level) Id() float32 {
 	return float32(l)
+}
+
+func (l Level) String() string {
+	return fmt.Sprintf("%.1f", l.Id())
 }
 
 func (l Level) IsValid() bool {

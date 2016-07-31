@@ -237,6 +237,10 @@ func (p Pokemon) Id() int {
 	return int(p)
 }
 
+func (p Pokemon) IsValid() bool {
+	return Bulbasaur <= p && p <= Mew
+}
+
 func (p Pokemon) EvolveFrom() Pokemon {
 	return p.self().evolveFrom
 }

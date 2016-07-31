@@ -10,6 +10,7 @@ import (
 type Move interface {
 	fmt.Stringer
 	Id() int
+	IsValid() bool
 	Type() typ.Type
 	Damage() int
 	EnergyRequired() int
@@ -153,6 +154,10 @@ func (m StandardMove) Id() int {
 	return int(m)
 }
 
+func (m StandardMove) IsValid() bool {
+	return Acid <= m && m <= ZenHeadbutt
+}
+
 func (m StandardMove) Type() typ.Type {
 	return m.self()._type
 }
@@ -171,6 +176,10 @@ func (m StandardMove) self() *_standard_move {
 
 func (m SpecialMove) Id() int {
 	return int(m)
+}
+
+func (m SpecialMove) IsValid() bool {
+	return AerialAce <= m && m <= X_Scissor
 }
 
 func (m SpecialMove) Type() typ.Type {

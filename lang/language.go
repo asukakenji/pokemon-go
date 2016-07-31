@@ -4,7 +4,8 @@ package lang
 type Language int8
 
 const (
-	Japanese Language = iota
+	_ Language = iota
+	Japanese
 	English
 	French
 	German
@@ -83,4 +84,12 @@ func (l Language) ShortName() string {
 	default:
 		return ""
 	}
+}
+
+func (l Language) Id() int {
+	return int(l)
+}
+
+func (l Language) IsValid() bool {
+	return Japanese <= l && l <= ChineseTaiwan
 }

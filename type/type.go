@@ -82,6 +82,10 @@ func (t Type) Id() int {
 	return int(t)
 }
 
+func (t Type) IsValid() bool {
+	return Normal <= t && t <= Fairy
+}
+
 func (t Type) LocalName(l lang.Language) string {
 	result := ""
 	switch l {

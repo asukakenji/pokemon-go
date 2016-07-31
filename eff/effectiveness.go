@@ -68,6 +68,10 @@ func (e Effectiveness) Id() int {
 	return int(e)
 }
 
+func (e Effectiveness) IsValid() bool {
+	return EX <= e && e <= EO
+}
+
 func (e Effectiveness) LocalName(l lang.Language) string {
 	result := ""
 	switch l {
