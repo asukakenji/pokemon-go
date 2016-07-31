@@ -246,6 +246,14 @@ func printSpecs(l lang.Language, pkm pokemon.Pokemon, cp, hp, sd, cd int, wild b
 	}
 }
 
+func matchCpAndHp(pkm pokemon.Pokemon, iv pokemon.IndividualValues, lvl lv.Level, cp, hp int) bool {
+	cpMin, cpMax, hpMin, hpMax := pkm.CombatPowerAndHitPoints(iv, lvl)
+	if lvl.IsInteger() {
+		return cpMin == cp && hpMin == hp
+	}
+	return cpMin < cp && cp < cpMax && hpMin < hp && hp < hpMax
+}
+
 func allLevels() []lv.Level {
 	result := make([]lv.Level, (40-1)*2)
 	for level := lv.Level(float32(1.0)); level <= 40.0; level += 0.5 {
@@ -318,12 +326,4 @@ func readBool(reader *bufio.Reader, prompt string, defaultValue bool) bool {
 		}
 		return value
 	}
-}
-
-func matchCpAndHp(pkm pokemon.Pokemon, iv pokemon.IndividualValues, lvl lv.Level, cp, hp int) bool {
-	cpMin, cpMax, hpMin, hpMax := pkm.CombatPowerAndHitPoints(iv, lvl)
-	if lvl.IsInteger() {
-		return cpMin == cp && hpMin == hp
-	}
-	return cpMin < cp && cp < cpMax && hp < hpMin && hp < hpMax
 }
