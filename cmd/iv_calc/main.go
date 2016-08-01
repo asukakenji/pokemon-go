@@ -4,10 +4,11 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strconv"
 	"strings"
 
-	"github.com/asukakenji/pokemon-go/lang"
+	"github.com/asukakenji/pokemon-go/cmd"
+
+	language "github.com/asukakenji/pokemon-go/lang"
 	"github.com/asukakenji/pokemon-go/lv"
 	"github.com/asukakenji/pokemon-go/pokemon"
 )
@@ -17,195 +18,122 @@ type spec struct {
 	Level lv.Level
 }
 
-var msg = map[lang.Language][]string{
-	lang.Japanese: {
-		"%s (name or number): ",
-		"%s (name or number) [#%03d (%s)]: ",
-		"This %s is not found\n",
-	},
-	lang.English: {
-		"%s (name or number): ",
-		"%s (name or number) [#%03d (%s)]: ",
-		"This %s is not found\n",
-	},
-	lang.French: {
-		"%s (name or number): ",
-		"%s (name or number) [#%03d (%s)]: ",
-		"This %s is not found\n",
-	},
-	lang.German: {
-		"%s (name or number): ",
-		"%s (name or number) [#%03d (%s)]: ",
-		"This %s is not found\n",
-	},
-	lang.Italian: {
-		"%s (name or number): ",
-		"%s (name or number) [#%03d (%s)]: ",
-		"This %s is not found\n",
-	},
-	lang.Korean: {
-		"%s (name or number): ",
-		"%s (name or number) [#%03d (%s)]: ",
-		"This %s is not found\n",
-	},
-	lang.Spanish: {
-		"%s (name or number): ",
-		"%s (name or number) [#%03d (%s)]: ",
-		"This %s is not found\n",
-	},
-	lang.ChineseSimplified: {
-		"%s（编号 或者 名字）：",
-		"%s（编号 或者 名字）[#%03d (%s)]：",
-		"找不到这个%s\n",
-	},
-	lang.ChineseTraditional: {
-		"%s（編號 或者 名字）：",
-		"%s（編號 或者 名字）[#%03d (%s)]：",
-		"找不到這個%s\n",
-	},
-	lang.ChineseChina: {
-		"%s（编号 或者 名字）：",
-		"%s（编号 或者 名字）[#%03d (%s)]：",
-		"找不到这个%s\n",
-	},
-	lang.ChineseHongKong: {
-		"%s（冧把 或者 名）：",
-		"%s（冧把 或者 名）[#%03d (%s)]：",
-		"搵唔到呢隻%s\n",
-	},
-	lang.ChineseTaiwan: {
-		"%s（編號 或者 名字）：",
-		"%s（編號 或者 名字）[#%03d (%s)]：",
-		"找不到這個%s\n",
-	},
-}
-
 func main() {
 	reader := bufio.NewReader(os.Stdin)
 
 	// Select Language
-	l := lang.Language(0)
-	for {
-		lang.All().ForEach(func(l lang.Language) {
-			fmt.Printf("%d: %s\n", l.Id(), l.LocalName())
-		})
-		fmt.Print("> ")
-		if n, err := fmt.Fscanf(reader, "%d\n", &l); n != 1 || err != nil {
-			fmt.Println(err)
-			continue
-		}
-		if !l.IsValid() {
-			continue
-		}
-		break
-	}
+	lang := cmd.ReadLanguage(reader)
 
+	mode := "N" // N = New, P = Power Up, E = Evolve
 	pkm := pokemon.None
 	cp := 0
 	hp := 0
 	sd := 0
 	cd := 0
 	wild := true
+	ivs := []pokemon.IndividualValues(nil)
 
 	for {
 		// Select Pokémon
-		for {
-			p2 := pkm
-			pokemonString := ""
-			if pkm == pokemon.None {
-				fmt.Printf(msg[l][0], pokemon.PackageName(l))
-				if n, err := fmt.Fscanf(reader, "%s\n", &pokemonString); n != 1 || err != nil {
-					fmt.Println(err)
-					continue
-				}
-			} else {
-				fmt.Printf(msg[l][1], pokemon.PackageName(l), pkm.Id(), pkm.LocalName(l))
-				if line, err := reader.ReadString('\n'); err != nil {
-					fmt.Println(err)
-					continue
-				} else {
-					pokemonString = strings.TrimSuffix(strings.TrimSuffix(line, "\n"), "\r")
-				}
+		switch mode {
+		case "N":
+			pkm = cmd.ReadPokemon(lang, reader, pkm)
+			fmt.Printf("#%03d (%s)\n", pkm.Id(), pkm.LocalName(lang))
+		case "P":
+			// Keep previous value
+		case "E":
+			// TODO: Write this!
+			pkmIterable := pkm.EvolveTo()
+
+			// This should be implemented as ToSlice()
+			pkms := make([]pokemon.Pokemon, 0)
+			pkmIterable.ForEach(func (p pokemon.Pokemon) {
+				pkms = append(pkms, p)
+			})
+
+			for _, p := range pkms {
+				fmt.Println("%d: %s\n", p.Id(), p.LocalName(lang))
 			}
-			if pokemonString != "" {
-				if i, err := strconv.Atoi(pokemonString); err != nil {
-					p2 = pokemon.ByCodeName(pokemonString)
-				} else {
-					p2 = pokemon.Pokemon(i)
-				}
-			}
-			if !p2.IsValid() {
-				fmt.Printf(msg[l][2], pokemon.PackageName(l))
-				continue
-			}
-			pkm = p2
-			fmt.Printf("#%03d (%s)\n", pkm.Id(), pkm.LocalName(l))
-			break
+			fmt.Println()
+
+			// TODO: Add valid list
+			pkm = cmd.ReadPokemon(lang, reader, pkm)
+		default:
+			panic("Invalid mode")
 		}
 
 		// Combat Power
-		for {
-			cp = readInt(reader, "CP [%d]: ", cp)
-			break
-		}
+		// TODO: Add valid range
+		cp = cmd.ReadInt(reader, "CP [%d]: ", cp, nil)
 
 		// Hit Points
-		for {
-			hp = readInt(reader, "HP [%d]: ", hp)
-			break
-		}
+		// TODO: Add valid range
+		hp = cmd.ReadInt(reader, "HP [%d]: ", hp, nil)
 
 		// Stardust
-		for {
-			sd = readInt(reader, "Stardust [%d]: ", sd)
-			break
-		}
+		// TODO: Add valid list
+		sd = cmd.ReadInt(reader, "Stardust [%d]: ", sd, nil)
 
 		// Candy
-		for {
-			cd = readInt(reader, "Candy (0 = auto) [%d]: ", 0)
+		// TODO: Add valid list
+		lvls_temp := lv.LevelsByStardust(sd)
+		for _, lvl := range lvls_temp {
+			cd = lvl.CandyToPowerUp()
 			break
 		}
+		cd = cmd.ReadInt(reader, "Candy (0 = auto) [%d]: ", 0, nil)
 
 		// Wild
-		for {
-			wild = readBool(reader, "Wild? (Y/N) [%s]: ", true)
-			break
+		switch mode {
+		case "N":
+			wildString := cmd.ReadStringWithChoices(reader, "Wild? Yes (Y) / No (N) [%s]: ", "Y", "Y", "N")
+			wild = strings.ToUpper(wildString) != "N"
+		case "P":
+			wild = false
+		case "E":
+			// Keep previous value
+		default:
+			panic("Invalid mode")
 		}
 
 		specs := make([]spec, 0)
 
-		var lvls []lv.Level
-		if cd == 0 {
-			lvls = lv.LevelsByStardust(sd)
-			for _, lvl := range lvls {
-				cd = lvl.CandyToPowerUp()
-				break
-			}
+		if mode == "N" {
+			ivs = allIVs()
 		} else {
-			lvls = lv.LevelsByStardustAndCandy(sd, cd)
+			// Keep previous value
 		}
 
-		ivs := allIVs()
+		lvls := lv.LevelsByStardustAndCandy(sd, cd)
+		ivs2 := make([]pokemon.IndividualValues, 0)
 		for _, iv := range ivs {
+			isMatched := false
 			for _, lvl := range lvls {
 				if wild && !lvl.IsInteger() {
 					continue
 				}
 				if matchCpAndHp(pkm, iv, lvl, cp, hp) {
 					specs = append(specs, spec{iv, lvl})
+					isMatched = true
 				}
 			}
+			if isMatched {
+				ivs2 = append(ivs2, iv)
+			}
 		}
-		printSpecs(l, pkm, cp, hp, sd, cd, wild, specs)
+		ivs = ivs2
+		printSpecs(lang, pkm, cp, hp, sd, cd, wild, specs)
+
+		// Mode
+		mode = cmd.ReadStringWithChoices(reader, "New (N) / Power Up (P) / Evolve (E) [%s]: ", "N", "N", "P", "E")
 	}
 }
 
-func printSpecs(l lang.Language, pkm pokemon.Pokemon, cp, hp, sd, cd int, wild bool, specs []spec) {
+func printSpecs(lang language.Language, pkm pokemon.Pokemon, cp, hp, sd, cd int, wild bool, specs []spec) {
 	fmt.Println()
 	fmt.Printf("%s\n", "Input")
 	fmt.Printf("%s\n", "-----")
-	fmt.Printf("Pokémon: #%03d (%s)\n", pkm.Id(), pkm.LocalName(l))
+	fmt.Printf("Pokémon: #%03d (%s)\n", pkm.Id(), pkm.LocalName(lang))
 	fmt.Printf("CP: %d\n", cp)
 	fmt.Printf("HP: %d\n", hp)
 	fmt.Printf("Stardust: %d\n", sd)
@@ -244,6 +172,7 @@ func printSpecs(l lang.Language, pkm pokemon.Pokemon, cp, hp, sd, cd int, wild b
 	} else {
 		fmt.Printf("Perfection (Min, Avg, Max): %f%%, %f%%, %f%%\n", perfectionMin, perfectionSum/float64(count), perfectionMax)
 	}
+	fmt.Println()
 }
 
 func matchCpAndHp(pkm pokemon.Pokemon, iv pokemon.IndividualValues, lvl lv.Level, cp, hp int) bool {
@@ -272,58 +201,4 @@ func allIVs() []pokemon.IndividualValues {
 		}
 	}
 	return result
-}
-
-func readInt(reader *bufio.Reader, prompt string, defaultValue int) int {
-	for {
-		value := defaultValue
-		input := ""
-		fmt.Printf(prompt, defaultValue)
-		if line, err := reader.ReadString('\n'); err != nil {
-			fmt.Println(err)
-			continue
-		} else {
-			input = strings.TrimSuffix(strings.TrimSuffix(line, "\n"), "\r")
-		}
-		if input != "" {
-			if i, err := strconv.Atoi(input); err != nil {
-				fmt.Println(err)
-				continue
-			} else {
-				value = i
-			}
-		}
-		return value
-	}
-}
-
-func readBool(reader *bufio.Reader, prompt string, defaultValue bool) bool {
-	for {
-		value := defaultValue
-		input := ""
-		defaultValueString := ""
-		if defaultValue {
-			defaultValueString = "Y"
-		} else {
-			defaultValueString = "N"
-		}
-		fmt.Printf(prompt, defaultValueString)
-		if line, err := reader.ReadString('\n'); err != nil {
-			fmt.Println(err)
-			continue
-		} else {
-			input = strings.TrimSuffix(strings.TrimSuffix(line, "\n"), "\r")
-		}
-		if input != "" {
-			switch input[0] {
-			case 'N', 'n':
-				value = false
-			case 'Y', 'y':
-				value = true
-			default:
-				continue
-			}
-		}
-		return value
-	}
 }
