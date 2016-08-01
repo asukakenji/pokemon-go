@@ -201,8 +201,5 @@ func (filter *PokemonFilter) ForEach(consumer func(pokemon.IndividualValues, lv.
 }
 
 func match(value, min, max int) bool {
-	if max == min || max == min+1 {
-		return min <= value && value <= max
-	}
-	return min < value && value < max
+	return min <= value && value <= max
 }

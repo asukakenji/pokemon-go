@@ -306,7 +306,7 @@ func (p Pokemon) CombatPower(iv IndividualValues, level lv.Level) int {
 		panic("Invalid level")
 	}
 	if !level.IsInteger() {
-		panic("Level is not integer")
+		panic("Level is not integral")
 	}
 	cp, _ := p.rawCombatPowerAndHitPointsForIntegerLevel(iv, level)
 	return atLeast10(int(cp))
@@ -317,29 +317,40 @@ func (p Pokemon) HitPoints(iv IndividualValues, level lv.Level) int {
 		panic("Invalid level")
 	}
 	if !level.IsInteger() {
-		panic("Level is not integer")
+		panic("Level is not integral")
 	}
 	_, hp := p.rawCombatPowerAndHitPointsForIntegerLevel(iv, level)
 	return atLeast10(int(hp))
 }
 
-func (p Pokemon) RawCombatPowerAndHitPoints(iv IndividualValues, level lv.Level) (cpMin, cpMax, hpMin, hpMax float64) {
+func (p Pokemon) RawCombatPowerAndHitPoints(iv IndividualValues, level lv.Level) (rawCpMin, rawCpMax, rawHpMin, rawHpMax float64) {
 	if !level.IsValid() {
 		panic("Invalid level")
 	}
 	if level.IsInteger() {
-		cpMin, hpMin = p.rawCombatPowerAndHitPointsForIntegerLevel(iv, level)
-		cpMax, hpMax = cpMin, hpMin
+		rawCpMin, rawHpMin = p.rawCombatPowerAndHitPointsForIntegerLevel(iv, level)
+		rawCpMax, rawHpMax = rawCpMin, rawHpMin
 	} else {
-		cpMin, hpMin = p.rawCombatPowerAndHitPointsForIntegerLevel(iv, (level - 0.5))
-		cpMax, hpMax = p.rawCombatPowerAndHitPointsForIntegerLevel(iv, (level + 0.5))
+		rawCpMin, rawHpMin = p.rawCombatPowerAndHitPointsForIntegerLevel(iv, (level - 0.5))
+		rawCpMax, rawHpMax = p.rawCombatPowerAndHitPointsForIntegerLevel(iv, (level + 0.5))
 	}
 	return
 }
 
 func (p Pokemon) CombatPowerAndHitPoints(iv IndividualValues, level lv.Level) (cpMin, cpMax, hpMin, hpMax int) {
 	rawCpMin, rawCpMax, rawHpMin, rawHpMax := p.RawCombatPowerAndHitPoints(iv, level)
-	return atLeast10(int(rawCpMin)), atLeast10(int(rawCpMax)), atLeast10(int(rawHpMin)), atLeast10(int(rawHpMax))
+	cpMin, cpMax, hpMin, hpMax = atLeast10(int(rawCpMin)), atLeast10(int(rawCpMax)), atLeast10(int(rawHpMin)), atLeast10(int(rawHpMax))
+	// If level is integral, cpMin == cpMax (and hpMin == hpMax).
+	// Otherwise, cpMin and cpMax (and hpMin and hpMax) could be the same or different.
+	if cpMax - cpMin >= 2 {
+		cpMin++
+		cpMax--
+	}
+	if hpMax - hpMin >= 2 {
+		hpMin++
+		hpMax--
+	}
+	return
 }
 
 func (p Pokemon) rawCombatPowerAndHitPointsForIntegerLevel(iv IndividualValues, level lv.Level) (cp, hp float64) {

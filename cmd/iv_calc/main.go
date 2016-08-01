@@ -122,7 +122,10 @@ func main() {
 		printSpecs(lang, filter)
 
 		// Mode
-		mode = strings.ToUpper(cmd.ReadStringWithChoices(reader, "New (N) / Power Up (P) / Evolve (E) [%s]: ", "N", "N", "P", "E"))
+		if mode == "E" {
+			mode = "P"
+		}
+		mode = strings.ToUpper(cmd.ReadStringWithChoices(reader, "New (N) / Power Up (P) / Evolve (E) [%s]: ", mode, "N", "P", "E"))
 		fmt.Println()
 	}
 }
