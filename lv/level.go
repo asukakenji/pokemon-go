@@ -33,6 +33,10 @@ func (l Level) CandyToPowerUp() int {
 	return int(l.self().candyToPowerUp)
 }
 
+func (l Level) StardustAndCandy() (int, int) {
+	return l.StardustToPowerUp(), l.CandyToPowerUp()
+}
+
 func (l Level) CombatPowerMultiplier() float64 {
 	return l.self().combatPowerMultiplier
 }

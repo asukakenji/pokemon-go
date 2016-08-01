@@ -24,7 +24,7 @@ func main() {
 	sta := 0
 	for {
 		// Select Pokémon
-		pkm = cmd.ReadPokemon(lang, reader, pkm)
+		pkm = cmd.ReadPokemon(lang, reader, pkm, nil)
 		fmt.Printf("#%03d (%s)\n", pkm.Id(), pkm.LocalName(lang))
 
 		// Enter Level

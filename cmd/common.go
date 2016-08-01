@@ -31,7 +31,7 @@ func ReadLanguage(reader *bufio.Reader) lang.Language {
 	}
 }
 
-func ReadPokemon(l lang.Language, reader *bufio.Reader, defaultValue pokemon.Pokemon) pokemon.Pokemon {
+func ReadPokemon(l lang.Language, reader *bufio.Reader, defaultValue pokemon.Pokemon, isValid func(pokemon.Pokemon) bool) pokemon.Pokemon {
 	var msg = map[lang.Language][]string{
 		lang.Japanese: {
 			"%s (name or number): ",
@@ -123,8 +123,23 @@ func ReadPokemon(l lang.Language, reader *bufio.Reader, defaultValue pokemon.Pok
 			fmt.Printf(msg[l][2], pokemon.PackageName(l))
 			continue
 		}
+		if isValid != nil && !isValid(value) {
+			fmt.Println("Invalid input")
+			continue
+		}
 		return value
 	}
+}
+
+func ReadPokemonWithChoices(l lang.Language, reader *bufio.Reader, defaultValue pokemon.Pokemon, validValues ...pokemon.Pokemon) pokemon.Pokemon {
+	return ReadPokemon(l, reader, defaultValue, func(value pokemon.Pokemon) bool {
+		for _, validValue := range validValues {
+			if value == validValue {
+				return true
+			}
+		}
+		return false
+	})
 }
 
 func ReadString(reader *bufio.Reader, prompt string, defaultValue string, isValid func(string) bool) string {
@@ -140,6 +155,10 @@ func ReadString(reader *bufio.Reader, prompt string, defaultValue string, isVali
 		}
 		if input != "" {
 			value = input
+		}
+		if isValid != nil && !isValid(value) {
+			fmt.Println("Invalid input")
+			continue
 		}
 		return value
 	}
@@ -181,6 +200,23 @@ func ReadInt(reader *bufio.Reader, prompt string, defaultValue int, isValid func
 		}
 		return value
 	}
+}
+
+func ReadIntWithChoices(reader *bufio.Reader, prompt string, defaultValue int, validValues ...int) int {
+	return ReadInt(reader, prompt, defaultValue, func(value int) bool {
+		for _, validValue := range validValues {
+			if value == validValue {
+				return true
+			}
+		}
+		return false
+	})
+}
+
+func ReadIntInRange(reader *bufio.Reader, prompt string, defaultValue, minValue, maxValue int) int {
+	return ReadInt(reader, prompt, defaultValue, func(value int) bool {
+		return minValue <= value && value <= maxValue
+	})
 }
 
 func ReadFloat32(reader *bufio.Reader, prompt string, defaultValue float32, isValid func(float32) bool) float32 {
