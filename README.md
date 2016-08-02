@@ -64,16 +64,11 @@ This project aims primarily at providing the data tables used in the game, an AP
   - This package deals with generic collections and common definitions in the project.
 
 ## TODOs (Executables)
-- [ ] Fix calculations for non-integer levels
-- [ ] Usability: Don't panic, ask again for invalid input
-- [ ] Usability: Skip "Candy to Power Up" when unique
 - [ ] Usabliity: Non-interactive mode
 - [ ] Develop "IV Calculator Pro"
 - [ ] Consider switching to [`termbox-go`](https://github.com/nsf/termbox-go)
 
 ## TODOs (Library)
-- [ ] Fix `CombatPower()` and `HitPoints()` in the `pokemon` package (should return a range)
-- [ ] Add methods to support CP / HP matching
 - [ ] Add multi-lingual definitions to the `move` package
 - [ ] Implement `lv_slice.go` as in other packages
 - [ ] Modify `iv_calc` to use the new API after the item above is completed
