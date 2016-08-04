@@ -24,8 +24,8 @@ func main() {
 	sta := 0
 	for {
 		// Select Pokémon
-		pkm = cmd.ReadPokemon(lang, reader, pkm, nil)
-		fmt.Printf("#%03d (%s)\n", pkm.Id(), pkm.LocalName(lang))
+		pkm = cmd.ReadPokemon(lang, reader, pkm, nil, nil)
+		fmt.Printf("%s\n", cmd.PokemonIdAndName(lang, pkm))
 
 		// Enter Level
 		lvl := lv.Level(cmd.ReadFloat32(reader, "Level (1.0 ~ 40.0) [%.1f]: ", float32(lvl), checkLvl))

@@ -33,8 +33,8 @@ func main() {
 		switch mode {
 		case "N":
 			// Reset pkm, specs
-			pkm = cmd.ReadPokemon(lang, reader, pkm, nil)
-			fmt.Printf("#%03d (%s)\n", pkm.Id(), pkm.LocalName(lang))
+			pkm = cmd.ReadPokemon(lang, reader, pkm, nil, nil)
+			fmt.Printf("%s\n", cmd.PokemonIdAndName(lang, pkm))
 			filter.Reset()
 			filter.SetPokemon(pkm)
 		case "P":
@@ -50,15 +50,12 @@ func main() {
 				pkms = append(pkms, p)
 			})
 
-			// TODO: Display choices on every iteration
-			for _, p := range pkms {
-				fmt.Printf("%d: %s\n", p.Id(), p.LocalName(lang))
-			}
-			fmt.Println()
-
-			for _, p := range pkms {
-				pkm = p
-				break
+			if len(pkms) == 0 {
+				// If the Pokémon is not evolve-able, add itself as the only choice;
+				pkms = []pokemon.Pokemon{pkm}
+			} else {
+				// Otherwise, select the first choice as default.
+				pkm = pkms[0]
 			}
 
 			pkm = cmd.ReadPokemonWithChoices(lang, reader, pkm, pkms...)
@@ -125,6 +122,7 @@ func main() {
 		if mode == "E" {
 			mode = "P"
 		}
+		// TODO: Detect un-evolve-able Pokémons and change manual
 		mode = strings.ToUpper(cmd.ReadStringWithChoices(reader, "New (N) / Power Up (P) / Evolve (E) [%s]: ", mode, "N", "P", "E"))
 		fmt.Println()
 	}
