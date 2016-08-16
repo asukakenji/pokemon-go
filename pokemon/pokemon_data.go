@@ -80,7 +80,7 @@ var pokemons = [...]*_pokemon{
 	&_pokemon{Persian, Meowth, 130, 156, 146, t.Normal, t_, 32.0, 1.0, Meowth, 0},                    // 053: Persian (ペルシアン)
 	&_pokemon{Psyduck, p_, 100, 132, 112, t.Water, t_, 19.6, 0.8, Psyduck, 50},                       // 054: Psyduck (コダック)
 	&_pokemon{Golduck, Psyduck, 160, 194, 176, t.Water, t_, 76.6, 1.7, Psyduck, 0},                   // 055: Golduck (ゴルダック)
-	&_pokemon{Mankey, p_, 80, 112, 96, t.Fighting, t_, 28.0, 0.5, Mankey, 50},                        // 056: Mankey (マンキー)
+	&_pokemon{Mankey, p_, 80, 122, 96, t.Fighting, t_, 28.0, 0.5, Mankey, 50},                        // 056: Mankey (マンキー)
 	&_pokemon{Primeape, Mankey, 130, 178, 150, t.Fighting, t_, 32.0, 1.0, Mankey, 0},                 // 057: Primeape (オコリザル)
 	&_pokemon{Growlithe, p_, 110, 156, 110, t.Fire, t_, 19.0, 0.7, Growlithe, 50},                    // 058: Growlithe (ガーディ)
 	&_pokemon{Arcanine, Growlithe, 180, 230, 180, t.Fire, t_, 155.0, 1.9, Growlithe, 0},              // 059: Arcanine (ウインディ)
