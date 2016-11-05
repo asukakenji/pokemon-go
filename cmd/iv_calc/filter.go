@@ -9,12 +9,12 @@ import (
 )
 
 type Spec struct {
-	iv pokemon.IndividualValues
+	iv  pokemon.IndividualValues
 	lvl lv.Level
 }
 
 type PokemonFilter struct {
-	pkm  pokemon.Pokemon
+	pkm   pokemon.Pokemon
 	specs []Spec
 }
 
@@ -39,7 +39,7 @@ func (filter *PokemonFilter) Reset() {
 		lvls = append(lvls, lvl)
 	}
 
-	specs := make([]Spec, 0, len(ivs) * len(lvls))
+	specs := make([]Spec, 0, len(ivs)*len(lvls))
 	for _, iv := range ivs {
 		for _, lvl := range lvls {
 			specs = append(specs, Spec{iv, lvl})

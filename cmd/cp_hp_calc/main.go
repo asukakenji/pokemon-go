@@ -12,10 +12,13 @@ import (
 )
 
 func main() {
-	reader := bufio.NewReader(os.Stdin)
+	scanner := bufio.NewScanner(os.Stdin)
 
 	// Select Language
-	lang := cmd.ReadLanguage(reader)
+	lang, ok := cmd.ReadLanguage(scanner)
+	if !ok {
+		return
+	}
 
 	pkm := pokemon.None
 	lvl := lv.Level(1.0)
@@ -24,20 +27,36 @@ func main() {
 	sta := 0
 	for {
 		// Select Pokémon
-		pkm = cmd.ReadPokemon(lang, reader, pkm, nil, nil)
+		pkm, ok = cmd.ReadPokemon(lang, scanner, pkm, nil, nil)
+		if !ok {
+			return
+		}
 		fmt.Printf("%s\n", cmd.PokemonIdAndName(lang, pkm))
 
 		// Enter Level
-		lvl := lv.Level(cmd.ReadFloat32(reader, "Level (1.0 ~ 40.0) [%.1f]: ", float32(lvl), checkLvl))
+		f, ok := cmd.ReadFloat32(scanner, "Level (1.0 ~ 40.0) [%.1f]: ", float32(lvl), nil, checkLvl)
+		if !ok {
+			return
+		}
+		lvl = lv.Level(f)
 
 		// Attack
-		atk := cmd.ReadInt(reader, "Attack (0 ~ 15) [%d]: ", atk, checkAtkDefSta)
+		atk, ok = cmd.ReadInt(scanner, "Attack (0 ~ 15) [%d]: ", atk, nil, checkAtkDefSta)
+		if !ok {
+			return
+		}
 
 		// Defense
-		def := cmd.ReadInt(reader, "Defense (0 ~ 15) [%d]: ", def, checkAtkDefSta)
+		def, ok = cmd.ReadInt(scanner, "Defense (0 ~ 15) [%d]: ", def, nil, checkAtkDefSta)
+		if !ok {
+			return
+		}
 
 		// Stamina
-		sta := cmd.ReadInt(reader, "Stamina (0 ~ 15) [%d]: ", sta, checkAtkDefSta)
+		sta, ok = cmd.ReadInt(scanner, "Stamina (0 ~ 15) [%d]: ", sta, nil, checkAtkDefSta)
+		if !ok {
+			return
+		}
 
 		iv := pokemon.IndividualValues{sta, atk, def}
 		cpMin, cpMax, hpMin, hpMax := pkm.CombatPowerAndHitPoints(iv, lvl)

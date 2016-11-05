@@ -14,10 +14,13 @@ import (
 )
 
 func main() {
-	reader := bufio.NewReader(os.Stdin)
+	scanner := bufio.NewScanner(os.Stdin)
 
 	// Select Language
-	lang := cmd.ReadLanguage(reader)
+	lang, ok := cmd.ReadLanguage(scanner)
+	if !ok {
+		return
+	}
 
 	mode := "N" // N = New, P = Power Up, E = Evolve
 	filter := NewPokemonFilter()
@@ -33,7 +36,10 @@ func main() {
 		switch mode {
 		case "N":
 			// Reset pkm, specs
-			pkm = cmd.ReadPokemon(lang, reader, pkm, nil, nil)
+			pkm, ok = cmd.ReadPokemon(lang, scanner, pkm, nil, nil)
+			if !ok {
+				return
+			}
 			fmt.Printf("%s\n", cmd.PokemonIdAndName(lang, pkm))
 			filter.Reset()
 			filter.SetPokemon(pkm)
@@ -58,7 +64,10 @@ func main() {
 				pkm = pkms[0]
 			}
 
-			pkm = cmd.ReadPokemonWithChoices(lang, reader, pkm, pkms...)
+			pkm, ok = cmd.ReadPokemonWithChoices(lang, scanner, pkm, pkms...)
+			if !ok {
+				return
+			}
 			filter.SetPokemon(pkm)
 		default:
 			panic("Invalid mode")
@@ -70,7 +79,10 @@ func main() {
 			cp = minCp
 		}
 		cpMsg := fmt.Sprintf("CP (%d ~ %d) [%%d]: ", minCp, maxCp)
-		cp = cmd.ReadIntInRange(reader, cpMsg, cp, minCp, maxCp)
+		cp, ok = cmd.ReadIntInRange(scanner, cpMsg, cp, minCp, maxCp)
+		if !ok {
+			return
+		}
 		filter.SetCp(cp)
 
 		// Hit Points
@@ -79,7 +91,10 @@ func main() {
 			hp = minHp
 		}
 		hpMsg := fmt.Sprintf("HP (%d ~ %d) [%%d]: ", minHp, maxHp)
-		hp = cmd.ReadIntInRange(reader, hpMsg, hp, minHp, maxHp)
+		hp, ok = cmd.ReadIntInRange(scanner, hpMsg, hp, minHp, maxHp)
+		if !ok {
+			return
+		}
 		filter.SetHp(hp)
 
 		// Stardust
@@ -88,7 +103,10 @@ func main() {
 			sd = minSd
 		}
 		sdMsg := fmt.Sprintf("Stardust (%d ~ %d) [%%d]: ", minSd, maxSd)
-		sd = cmd.ReadIntWithChoices(reader, sdMsg, sd, sds...)
+		sd, ok = cmd.ReadIntWithChoices(scanner, sdMsg, sd, sds...)
+		if !ok {
+			return
+		}
 		filter.SetSd(sd)
 
 		// Candy
@@ -97,14 +115,20 @@ func main() {
 			cd = minCd
 		}
 		cdMsg := fmt.Sprintf("Candy (%d ~ %d) [%%d]: ", minCd, maxCd)
-		cd = cmd.ReadIntWithChoices(reader, cdMsg, cd, cds...)
+		cd, ok = cmd.ReadIntWithChoices(scanner, cdMsg, cd, cds...)
+		if !ok {
+			return
+		}
 		filter.SetCd(cd)
 
 		// Wild
 		switch mode {
 		case "N":
-			isWildString := strings.ToUpper(cmd.ReadStringWithChoices(reader, "Wild? Yes (Y) / No (N) [%s]: ", "Y", "Y", "N"))
-			isWild = (isWildString != "N")
+			isWildString, ok := cmd.ReadStringWithChoices(scanner, "Wild? Yes (Y) / No (N) [%s]: ", "Y", "Y", "N")
+			if !ok {
+				return
+			}
+			isWild = (strings.ToUpper(isWildString) != "N")
 		case "P":
 			isWild = false
 		case "E":
@@ -123,7 +147,23 @@ func main() {
 			mode = "P"
 		}
 		// TODO: Detect un-evolve-able Pokémons and change manual
-		mode = strings.ToUpper(cmd.ReadStringWithChoices(reader, "New (N) / Power Up (P) / Evolve (E) [%s]: ", mode, "N", "P", "E"))
+		mode, ok = cmd.ReadStringWithChoices2(
+			scanner,
+			"What do you want to do next?",
+			mode,
+			[]struct {
+				Choice string
+				Desc   string
+			}{
+				{"N", "Calculate the next Pokémon"},
+				{"P", "Power Up this Pokémon"},
+				{"E", "Evolve this Pokémon"},
+			},
+		)
+		if !ok {
+			return
+		}
+		mode = strings.ToUpper(mode)
 		fmt.Println()
 	}
 }
