@@ -226,7 +226,7 @@ type IndividualValues struct {
 func ByCodeName(codeName string) Pokemon {
 	result := None
 	All().ForEach(func(p Pokemon) {
-		if p.String() == codeName {
+		if strings.ToUpper(p.String()) == strings.ToUpper(codeName) {
 			result = p
 		}
 	})
@@ -342,11 +342,11 @@ func (p Pokemon) CombatPowerAndHitPoints(iv IndividualValues, level lv.Level) (c
 	cpMin, cpMax, hpMin, hpMax = atLeast10(int(rawCpMin)), atLeast10(int(rawCpMax)), atLeast10(int(rawHpMin)), atLeast10(int(rawHpMax))
 	// If level is integral, cpMin == cpMax (and hpMin == hpMax).
 	// Otherwise, cpMin and cpMax (and hpMin and hpMax) could be the same or different.
-	if cpMax - cpMin >= 2 {
+	if cpMax-cpMin >= 2 {
 		cpMin++
 		cpMax--
 	}
-	if hpMax - hpMin >= 2 {
+	if hpMax-hpMin >= 2 {
 		hpMin++
 		hpMax--
 	}
