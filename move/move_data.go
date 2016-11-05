@@ -5,20 +5,20 @@ import (
 )
 
 type _standard_move struct {
-	id             StandardMove
-	_type          t.Type
-	damage         int16
-	energyIncrease int8
-	duration       float64
+	id              StandardMove
+	_type           t.Type
+	damage          int16
+	energyIncreased int8
+	duration        float64
 }
 
 type _special_move struct {
-	id                SpecialMove
-	_type             t.Type
-	damage            int16
-	energyRequired    int8
-	criticalHitChance int8
-	duration          float64
+	id                     SpecialMove
+	_type                  t.Type
+	damage                 int16
+	moveCountPerFullEnergy int8
+	criticalHitChance      int8
+	duration               float64
 }
 
 var moves = [...]interface{}{
