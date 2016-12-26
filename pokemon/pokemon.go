@@ -253,40 +253,34 @@ func (p Pokemon) EvolveTo() Iterable {
 }
 
 func (p Pokemon) LocalName(l lang.Language) string {
-	result := ""
 	switch l {
 	case lang.Japanese:
-		result = ja.Pokemon(p).String()
+		return ja.Names[p]
 	case lang.English:
-		result = en.Pokemon(p).String()
+		return en.Names[p]
 	case lang.French:
-		result = fr.Pokemon(p).String()
+		return fr.Names[p]
 	case lang.German:
-		result = de.Pokemon(p).String()
+		return de.Names[p]
 	case lang.Italian:
-		result = it.Pokemon(p).String()
+		return it.Names[p]
 	case lang.Korean:
-		result = ko.Pokemon(p).String()
+		return ko.Names[p]
 	case lang.Spanish:
-		result = es.Pokemon(p).String()
+		return es.Names[p]
 	case lang.ChineseSimplified:
-		result = zhCHS.Pokemon(p).String()
+		return zhCHS.Names[p]
 	case lang.ChineseTraditional:
-		result = zhCHT.Pokemon(p).String()
+		return zhCHT.Names[p]
 	case lang.ChineseChina:
-		result = zhCN.Pokemon(p).String()
+		return zhCN.Names[p]
 	case lang.ChineseHongKong:
-		result = zhHK.Pokemon(p).String()
+		return zhHK.Names[p]
 	case lang.ChineseTaiwan:
-		result = zhTW.Pokemon(p).String()
+		return zhTW.Names[p]
+	default:
+		panic("Invalid language")
 	}
-	result = strings.Replace(result, "_female_", "♀", -1)
-	result = strings.Replace(result, "_male_", "♂", -1)
-	result = strings.Replace(result, "_apostrophe_", "'", -1)
-	result = strings.Replace(result, "_full_stop_", ".", -1)
-	result = strings.Replace(result, "_space_", " ", -1)
-	result = strings.Replace(result, "_fullwidth_digit_three_", "３", -1)
-	return result
 }
 
 func (p Pokemon) BaseStamina() int {
